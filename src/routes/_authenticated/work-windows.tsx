@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHeader, Panel, NeedsFarm, LoadingBlock, ErrorState, Freshness, Note, Badge2, EmptyState } from "@/components/ui-kit";
+import { PageHeader, Panel, NeedsFarm, LoadingBlock, ErrorState, Freshness, Note, Badge2, EmptyState, RISK_CLS } from "@/components/ui-kit";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useFarm } from "@/lib/farm-context";
 import { safeWorkWindows, heatRisk, HEAT_LABEL, HEAT_GUIDANCE, type Intensity } from "@/lib/insights";
-import { RISK_CLS } from "./heat-safety";
 
 export const Route = createFileRoute("/_authenticated/work-windows")({
   head: () => ({ meta: [{ title: "Safe Work Windows — TinyCrops" }, { name: "description", content: "Suggested lower-heat periods for outdoor farm work." }] }),

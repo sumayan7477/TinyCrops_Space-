@@ -115,3 +115,11 @@ export function NeedsFarm({ children }: { children: ReactNode }) {
     );
   return <>{children}</>;
 }
+
+export const RISK_CLS: Record<"lower" | "caution" | "high" | "very_high" | "extreme", string> = {
+  lower: "bg-success/15 text-success border-success/30",
+  caution: "bg-info/10 text-info border-info/30",
+  high: "bg-warning/20 text-warning-foreground border-warning/40",
+  very_high: "bg-destructive/10 text-destructive border-destructive/30",
+  extreme: "bg-destructive text-destructive-foreground border-destructive",
+};

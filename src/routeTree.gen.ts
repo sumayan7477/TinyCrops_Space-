@@ -12,8 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFarmsRouteImport } from './routes/_authenticated/farms'
+import { Route as AuthenticatedHeatSafetyRouteImport } from './routes/_authenticated/heat-safety'
 import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
+import { Route as AuthenticatedRecommendationsRouteImport } from './routes/_authenticated/recommendations'
+import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticated/weather'
+import { Route as AuthenticatedWorkWindowsRouteImport } from './routes/_authenticated/work-windows'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,9 +34,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedFarmsRoute = AuthenticatedFarmsRouteImport.update({
   id: '/farms',
   path: '/farms',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHeatSafetyRoute = AuthenticatedHeatSafetyRouteImport.update({
+  id: '/heat-safety',
+  path: '/heat-safety',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
@@ -39,39 +54,94 @@ const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
   path: '/map',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRecommendationsRoute =
+  AuthenticatedRecommendationsRouteImport.update({
+    id: '/recommendations',
+    path: '/recommendations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedWeatherRoute = AuthenticatedWeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWorkWindowsRoute =
+  AuthenticatedWorkWindowsRouteImport.update({
+    id: '/work-windows',
+    path: '/work-windows',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/farms': typeof AuthenticatedFarmsRoute
+  '/heat-safety': typeof AuthenticatedHeatSafetyRoute
   '/map': typeof AuthenticatedMapRoute
+  '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/weather': typeof AuthenticatedWeatherRoute
+  '/work-windows': typeof AuthenticatedWorkWindowsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/farms': typeof AuthenticatedFarmsRoute
+  '/heat-safety': typeof AuthenticatedHeatSafetyRoute
   '/map': typeof AuthenticatedMapRoute
+  '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/weather': typeof AuthenticatedWeatherRoute
+  '/work-windows': typeof AuthenticatedWorkWindowsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/farms': typeof AuthenticatedFarmsRoute
+  '/_authenticated/heat-safety': typeof AuthenticatedHeatSafetyRoute
   '/_authenticated/map': typeof AuthenticatedMapRoute
+  '/_authenticated/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/_authenticated/weather': typeof AuthenticatedWeatherRoute
+  '/_authenticated/work-windows': typeof AuthenticatedWorkWindowsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/farms' | '/map'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/farms'
+    | '/heat-safety'
+    | '/map'
+    | '/recommendations'
+    | '/weather'
+    | '/work-windows'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/farms' | '/map'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/farms'
+    | '/heat-safety'
+    | '/map'
+    | '/recommendations'
+    | '/weather'
+    | '/work-windows'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/dashboard'
     | '/_authenticated/farms'
+    | '/_authenticated/heat-safety'
     | '/_authenticated/map'
+    | '/_authenticated/recommendations'
+    | '/_authenticated/weather'
+    | '/_authenticated/work-windows'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -103,11 +173,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/farms': {
       id: '/_authenticated/farms'
       path: '/farms'
       fullPath: '/farms'
       preLoaderRoute: typeof AuthenticatedFarmsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/heat-safety': {
+      id: '/_authenticated/heat-safety'
+      path: '/heat-safety'
+      fullPath: '/heat-safety'
+      preLoaderRoute: typeof AuthenticatedHeatSafetyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/map': {
@@ -117,17 +201,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMapRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/recommendations': {
+      id: '/_authenticated/recommendations'
+      path: '/recommendations'
+      fullPath: '/recommendations'
+      preLoaderRoute: typeof AuthenticatedRecommendationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/weather': {
+      id: '/_authenticated/weather'
+      path: '/weather'
+      fullPath: '/weather'
+      preLoaderRoute: typeof AuthenticatedWeatherRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/work-windows': {
+      id: '/_authenticated/work-windows'
+      path: '/work-windows'
+      fullPath: '/work-windows'
+      preLoaderRoute: typeof AuthenticatedWorkWindowsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFarmsRoute: typeof AuthenticatedFarmsRoute
+  AuthenticatedHeatSafetyRoute: typeof AuthenticatedHeatSafetyRoute
   AuthenticatedMapRoute: typeof AuthenticatedMapRoute
+  AuthenticatedRecommendationsRoute: typeof AuthenticatedRecommendationsRoute
+  AuthenticatedWeatherRoute: typeof AuthenticatedWeatherRoute
+  AuthenticatedWorkWindowsRoute: typeof AuthenticatedWorkWindowsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFarmsRoute: AuthenticatedFarmsRoute,
+  AuthenticatedHeatSafetyRoute: AuthenticatedHeatSafetyRoute,
   AuthenticatedMapRoute: AuthenticatedMapRoute,
+  AuthenticatedRecommendationsRoute: AuthenticatedRecommendationsRoute,
+  AuthenticatedWeatherRoute: AuthenticatedWeatherRoute,
+  AuthenticatedWorkWindowsRoute: AuthenticatedWorkWindowsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

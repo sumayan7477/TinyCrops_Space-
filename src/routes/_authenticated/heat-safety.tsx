@@ -1,22 +1,14 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHeader, Panel, NeedsFarm, LoadingBlock, ErrorState, Freshness, Note, Badge2 } from "@/components/ui-kit";
+import { PageHeader, Panel, NeedsFarm, LoadingBlock, ErrorState, Freshness, Note, Badge2, RISK_CLS } from "@/components/ui-kit";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useFarm } from "@/lib/farm-context";
-import { heatRisk, HEAT_LABEL, HEAT_GUIDANCE, INTENSITY_ADJUST, type Intensity, type HeatRisk } from "@/lib/insights";
+import { heatRisk, HEAT_LABEL, HEAT_GUIDANCE, INTENSITY_ADJUST, type Intensity } from "@/lib/insights";
 
 export const Route = createFileRoute("/_authenticated/heat-safety")({
   head: () => ({ meta: [{ title: "Heat Safety Index — TinyCrops" }, { name: "description", content: "Worker heat-stress estimates and precautions." }] }),
   component: Page,
 });
-
-export const RISK_CLS: Record<HeatRisk, string> = {
-  lower: "bg-success/15 text-success border-success/30",
-  caution: "bg-info/10 text-info border-info/30",
-  high: "bg-warning/20 text-warning-foreground border-warning/40",
-  very_high: "bg-destructive/10 text-destructive border-destructive/30",
-  extreme: "bg-destructive text-destructive-foreground border-destructive",
-};
 
 function Page() {
   const { weather: w, weatherLoading, weatherError } = useFarm();
