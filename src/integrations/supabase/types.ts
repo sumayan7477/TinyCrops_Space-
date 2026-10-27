@@ -14,7 +14,308 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      farms: {
+        Row: {
+          created_at: string
+          id: string
+          latitude: number
+          longitude: number
+          name: string
+          timezone: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          latitude: number
+          longitude: number
+          name: string
+          timezone?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          latitude?: number
+          longitude?: number
+          name?: string
+          timezone?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          parcel_id: string | null
+          priority: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          parcel_id?: string | null
+          priority?: string
+          read?: boolean
+          title: string
+          user_id?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          parcel_id?: string | null
+          priority?: string
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_parcel_id_fkey"
+            columns: ["parcel_id"]
+            isOneToOne: false
+            referencedRelation: "parcels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      observations: {
+        Row: {
+          cloud_cover_pct: number | null
+          created_at: string
+          id: string
+          indicator: string
+          mean_value: number | null
+          observed_at: string
+          parcel_id: string
+          quality: string | null
+          resolution_m: number | null
+          source: string
+          user_id: string
+        }
+        Insert: {
+          cloud_cover_pct?: number | null
+          created_at?: string
+          id?: string
+          indicator?: string
+          mean_value?: number | null
+          observed_at: string
+          parcel_id: string
+          quality?: string | null
+          resolution_m?: number | null
+          source: string
+          user_id?: string
+        }
+        Update: {
+          cloud_cover_pct?: number | null
+          created_at?: string
+          id?: string
+          indicator?: string
+          mean_value?: number | null
+          observed_at?: string
+          parcel_id?: string
+          quality?: string | null
+          resolution_m?: number | null
+          source?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "observations_parcel_id_fkey"
+            columns: ["parcel_id"]
+            isOneToOne: false
+            referencedRelation: "parcels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      parcels: {
+        Row: {
+          area_ha: number | null
+          boundary: Json | null
+          created_at: string
+          crop_type: string | null
+          farm_id: string
+          growth_stage: string | null
+          id: string
+          irrigated: boolean | null
+          name: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          area_ha?: number | null
+          boundary?: Json | null
+          created_at?: string
+          crop_type?: string | null
+          farm_id: string
+          growth_stage?: string | null
+          id?: string
+          irrigated?: boolean | null
+          name: string
+          status?: string
+          user_id?: string
+        }
+        Update: {
+          area_ha?: number | null
+          boundary?: Json | null
+          created_at?: string
+          crop_type?: string | null
+          farm_id?: string
+          growth_stage?: string | null
+          id?: string
+          irrigated?: boolean | null
+          name?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parcels_farm_id_fkey"
+            columns: ["farm_id"]
+            isOneToOne: false
+            referencedRelation: "farms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          heat_threshold_c: number
+          id: string
+          notify_email: boolean
+          notify_in_app: boolean
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          heat_threshold_c?: number
+          id: string
+          notify_email?: boolean
+          notify_in_app?: boolean
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          heat_threshold_c?: number
+          id?: string
+          notify_email?: boolean
+          notify_in_app?: boolean
+        }
+        Relationships: []
+      }
+      task_history: {
+        Row: {
+          created_at: string
+          event: string
+          id: string
+          task_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: string
+          task_id: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: string
+          task_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_history_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          assignee: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          farm_id: string | null
+          follow_up_date: string | null
+          id: string
+          intensity: string | null
+          notes: string | null
+          parcel_id: string | null
+          priority: string
+          source_alert: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assignee?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          farm_id?: string | null
+          follow_up_date?: string | null
+          id?: string
+          intensity?: string | null
+          notes?: string | null
+          parcel_id?: string | null
+          priority?: string
+          source_alert?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          assignee?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          farm_id?: string | null
+          follow_up_date?: string | null
+          id?: string
+          intensity?: string | null
+          notes?: string | null
+          parcel_id?: string | null
+          priority?: string
+          source_alert?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_farm_id_fkey"
+            columns: ["farm_id"]
+            isOneToOne: false
+            referencedRelation: "farms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_parcel_id_fkey"
+            columns: ["parcel_id"]
+            isOneToOne: false
+            referencedRelation: "parcels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
