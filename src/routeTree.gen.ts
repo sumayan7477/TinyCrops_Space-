@@ -12,12 +12,17 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedCropHealthRouteImport } from './routes/_authenticated/crop-health'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFarmsRouteImport } from './routes/_authenticated/farms'
 import { Route as AuthenticatedHeatSafetyRouteImport } from './routes/_authenticated/heat-safety'
+import { Route as AuthenticatedIrrigationRouteImport } from './routes/_authenticated/irrigation'
 import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
 import { Route as AuthenticatedRecommendationsRouteImport } from './routes/_authenticated/recommendations'
+import { Route as AuthenticatedStressDetectionRouteImport } from './routes/_authenticated/stress-detection'
+import { Route as AuthenticatedTimelineRouteImport } from './routes/_authenticated/timeline'
 import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticated/weather'
+import { Route as AuthenticatedWildfireRouteImport } from './routes/_authenticated/wildfire'
 import { Route as AuthenticatedWorkWindowsRouteImport } from './routes/_authenticated/work-windows'
 
 const IndexRoute = IndexRouteImport.update({
@@ -34,6 +39,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCropHealthRoute = AuthenticatedCropHealthRouteImport.update({
+  id: '/crop-health',
+  path: '/crop-health',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -49,6 +59,11 @@ const AuthenticatedHeatSafetyRoute = AuthenticatedHeatSafetyRouteImport.update({
   path: '/heat-safety',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedIrrigationRoute = AuthenticatedIrrigationRouteImport.update({
+  id: '/irrigation',
+  path: '/irrigation',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
   id: '/map',
   path: '/map',
@@ -60,9 +75,25 @@ const AuthenticatedRecommendationsRoute =
     path: '/recommendations',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedStressDetectionRoute =
+  AuthenticatedStressDetectionRouteImport.update({
+    id: '/stress-detection',
+    path: '/stress-detection',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTimelineRoute = AuthenticatedTimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedWeatherRoute = AuthenticatedWeatherRouteImport.update({
   id: '/weather',
   path: '/weather',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWildfireRoute = AuthenticatedWildfireRouteImport.update({
+  id: '/wildfire',
+  path: '/wildfire',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedWorkWindowsRoute =
@@ -75,23 +106,33 @@ const AuthenticatedWorkWindowsRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/farms': typeof AuthenticatedFarmsRoute
   '/heat-safety': typeof AuthenticatedHeatSafetyRoute
+  '/irrigation': typeof AuthenticatedIrrigationRoute
   '/map': typeof AuthenticatedMapRoute
   '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/timeline': typeof AuthenticatedTimelineRoute
   '/weather': typeof AuthenticatedWeatherRoute
+  '/wildfire': typeof AuthenticatedWildfireRoute
   '/work-windows': typeof AuthenticatedWorkWindowsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/farms': typeof AuthenticatedFarmsRoute
   '/heat-safety': typeof AuthenticatedHeatSafetyRoute
+  '/irrigation': typeof AuthenticatedIrrigationRoute
   '/map': typeof AuthenticatedMapRoute
   '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/timeline': typeof AuthenticatedTimelineRoute
   '/weather': typeof AuthenticatedWeatherRoute
+  '/wildfire': typeof AuthenticatedWildfireRoute
   '/work-windows': typeof AuthenticatedWorkWindowsRoute
 }
 export interface FileRoutesById {
@@ -99,12 +140,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/crop-health': typeof AuthenticatedCropHealthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/farms': typeof AuthenticatedFarmsRoute
   '/_authenticated/heat-safety': typeof AuthenticatedHeatSafetyRoute
+  '/_authenticated/irrigation': typeof AuthenticatedIrrigationRoute
   '/_authenticated/map': typeof AuthenticatedMapRoute
   '/_authenticated/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/_authenticated/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/_authenticated/timeline': typeof AuthenticatedTimelineRoute
   '/_authenticated/weather': typeof AuthenticatedWeatherRoute
+  '/_authenticated/wildfire': typeof AuthenticatedWildfireRoute
   '/_authenticated/work-windows': typeof AuthenticatedWorkWindowsRoute
 }
 export interface FileRouteTypes {
@@ -112,35 +158,50 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/crop-health'
     | '/dashboard'
     | '/farms'
     | '/heat-safety'
+    | '/irrigation'
     | '/map'
     | '/recommendations'
+    | '/stress-detection'
+    | '/timeline'
     | '/weather'
+    | '/wildfire'
     | '/work-windows'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/crop-health'
     | '/dashboard'
     | '/farms'
     | '/heat-safety'
+    | '/irrigation'
     | '/map'
     | '/recommendations'
+    | '/stress-detection'
+    | '/timeline'
     | '/weather'
+    | '/wildfire'
     | '/work-windows'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/crop-health'
     | '/_authenticated/dashboard'
     | '/_authenticated/farms'
     | '/_authenticated/heat-safety'
+    | '/_authenticated/irrigation'
     | '/_authenticated/map'
     | '/_authenticated/recommendations'
+    | '/_authenticated/stress-detection'
+    | '/_authenticated/timeline'
     | '/_authenticated/weather'
+    | '/_authenticated/wildfire'
     | '/_authenticated/work-windows'
   fileRoutesById: FileRoutesById
 }
@@ -173,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/crop-health': {
+      id: '/_authenticated/crop-health'
+      path: '/crop-health'
+      fullPath: '/crop-health'
+      preLoaderRoute: typeof AuthenticatedCropHealthRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -194,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHeatSafetyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/irrigation': {
+      id: '/_authenticated/irrigation'
+      path: '/irrigation'
+      fullPath: '/irrigation'
+      preLoaderRoute: typeof AuthenticatedIrrigationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/map': {
       id: '/_authenticated/map'
       path: '/map'
@@ -208,11 +283,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecommendationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/stress-detection': {
+      id: '/_authenticated/stress-detection'
+      path: '/stress-detection'
+      fullPath: '/stress-detection'
+      preLoaderRoute: typeof AuthenticatedStressDetectionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/timeline': {
+      id: '/_authenticated/timeline'
+      path: '/timeline'
+      fullPath: '/timeline'
+      preLoaderRoute: typeof AuthenticatedTimelineRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/weather': {
       id: '/_authenticated/weather'
       path: '/weather'
       fullPath: '/weather'
       preLoaderRoute: typeof AuthenticatedWeatherRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/wildfire': {
+      id: '/_authenticated/wildfire'
+      path: '/wildfire'
+      fullPath: '/wildfire'
+      preLoaderRoute: typeof AuthenticatedWildfireRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/work-windows': {
@@ -226,22 +322,32 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCropHealthRoute: typeof AuthenticatedCropHealthRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFarmsRoute: typeof AuthenticatedFarmsRoute
   AuthenticatedHeatSafetyRoute: typeof AuthenticatedHeatSafetyRoute
+  AuthenticatedIrrigationRoute: typeof AuthenticatedIrrigationRoute
   AuthenticatedMapRoute: typeof AuthenticatedMapRoute
   AuthenticatedRecommendationsRoute: typeof AuthenticatedRecommendationsRoute
+  AuthenticatedStressDetectionRoute: typeof AuthenticatedStressDetectionRoute
+  AuthenticatedTimelineRoute: typeof AuthenticatedTimelineRoute
   AuthenticatedWeatherRoute: typeof AuthenticatedWeatherRoute
+  AuthenticatedWildfireRoute: typeof AuthenticatedWildfireRoute
   AuthenticatedWorkWindowsRoute: typeof AuthenticatedWorkWindowsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCropHealthRoute: AuthenticatedCropHealthRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFarmsRoute: AuthenticatedFarmsRoute,
   AuthenticatedHeatSafetyRoute: AuthenticatedHeatSafetyRoute,
+  AuthenticatedIrrigationRoute: AuthenticatedIrrigationRoute,
   AuthenticatedMapRoute: AuthenticatedMapRoute,
   AuthenticatedRecommendationsRoute: AuthenticatedRecommendationsRoute,
+  AuthenticatedStressDetectionRoute: AuthenticatedStressDetectionRoute,
+  AuthenticatedTimelineRoute: AuthenticatedTimelineRoute,
   AuthenticatedWeatherRoute: AuthenticatedWeatherRoute,
+  AuthenticatedWildfireRoute: AuthenticatedWildfireRoute,
   AuthenticatedWorkWindowsRoute: AuthenticatedWorkWindowsRoute,
 }
 
