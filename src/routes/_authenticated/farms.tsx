@@ -48,7 +48,7 @@ function FarmsPage() {
       const la = Number(lat), lo = Number(lng);
       if (!fName.trim() || !Number.isFinite(la) || !Number.isFinite(lo) || Math.abs(la) > 90 || Math.abs(lo) > 180) throw new Error("Enter a name and a valid location");
       const f = await run(supabase.from("farms").insert({ name: fName.trim(), latitude: la, longitude: lo }).select().single());
-      setFarmId((f as { id: string }).id);
+      setFarmId((f as unknown as { id: string }).id);
       setFName(""); setLat(""); setLng(""); setMode("parcel");
     },
     ["farms"], "Farm added",

@@ -39,7 +39,9 @@ export const profileQuery = queryOptions({
   queryFn: async () => {
     const { data: u } = await supabase.auth.getUser();
     if (!u.user) return null;
-    return unwrap(await supabase.from("profiles").select("*").eq("id", u.user.id).maybeSingle());
+    const r = await supabase.from("profiles").select("*").eq("id", u.user.id).maybeSingle();
+    if (r.error) throw new Error(r.error.message);
+    return r.data;
   },
 });
 
