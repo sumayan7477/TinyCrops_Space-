@@ -18,8 +18,11 @@ import { Route as AuthenticatedFarmsRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedHeatSafetyRouteImport } from './routes/_authenticated/heat-safety'
 import { Route as AuthenticatedIrrigationRouteImport } from './routes/_authenticated/irrigation'
 import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedRecommendationsRouteImport } from './routes/_authenticated/recommendations'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedStressDetectionRouteImport } from './routes/_authenticated/stress-detection'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 import { Route as AuthenticatedTimelineRouteImport } from './routes/_authenticated/timeline'
 import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticated/weather'
 import { Route as AuthenticatedWildfireRouteImport } from './routes/_authenticated/wildfire'
@@ -69,18 +72,34 @@ const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
   path: '/map',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRecommendationsRoute =
   AuthenticatedRecommendationsRouteImport.update({
     id: '/recommendations',
     path: '/recommendations',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedStressDetectionRoute =
   AuthenticatedStressDetectionRouteImport.update({
     id: '/stress-detection',
     path: '/stress-detection',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedTimelineRoute = AuthenticatedTimelineRouteImport.update({
   id: '/timeline',
   path: '/timeline',
@@ -112,8 +131,11 @@ export interface FileRoutesByFullPath {
   '/heat-safety': typeof AuthenticatedHeatSafetyRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/map': typeof AuthenticatedMapRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/tasks': typeof AuthenticatedTasksRoute
   '/timeline': typeof AuthenticatedTimelineRoute
   '/weather': typeof AuthenticatedWeatherRoute
   '/wildfire': typeof AuthenticatedWildfireRoute
@@ -128,8 +150,11 @@ export interface FileRoutesByTo {
   '/heat-safety': typeof AuthenticatedHeatSafetyRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/map': typeof AuthenticatedMapRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/tasks': typeof AuthenticatedTasksRoute
   '/timeline': typeof AuthenticatedTimelineRoute
   '/weather': typeof AuthenticatedWeatherRoute
   '/wildfire': typeof AuthenticatedWildfireRoute
@@ -146,8 +171,11 @@ export interface FileRoutesById {
   '/_authenticated/heat-safety': typeof AuthenticatedHeatSafetyRoute
   '/_authenticated/irrigation': typeof AuthenticatedIrrigationRoute
   '/_authenticated/map': typeof AuthenticatedMapRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
   '/_authenticated/timeline': typeof AuthenticatedTimelineRoute
   '/_authenticated/weather': typeof AuthenticatedWeatherRoute
   '/_authenticated/wildfire': typeof AuthenticatedWildfireRoute
@@ -164,8 +192,11 @@ export interface FileRouteTypes {
     | '/heat-safety'
     | '/irrigation'
     | '/map'
+    | '/notifications'
     | '/recommendations'
+    | '/settings'
     | '/stress-detection'
+    | '/tasks'
     | '/timeline'
     | '/weather'
     | '/wildfire'
@@ -180,8 +211,11 @@ export interface FileRouteTypes {
     | '/heat-safety'
     | '/irrigation'
     | '/map'
+    | '/notifications'
     | '/recommendations'
+    | '/settings'
     | '/stress-detection'
+    | '/tasks'
     | '/timeline'
     | '/weather'
     | '/wildfire'
@@ -197,8 +231,11 @@ export interface FileRouteTypes {
     | '/_authenticated/heat-safety'
     | '/_authenticated/irrigation'
     | '/_authenticated/map'
+    | '/_authenticated/notifications'
     | '/_authenticated/recommendations'
+    | '/_authenticated/settings'
     | '/_authenticated/stress-detection'
+    | '/_authenticated/tasks'
     | '/_authenticated/timeline'
     | '/_authenticated/weather'
     | '/_authenticated/wildfire'
@@ -276,6 +313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMapRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/recommendations': {
       id: '/_authenticated/recommendations'
       path: '/recommendations'
@@ -283,11 +327,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecommendationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/stress-detection': {
       id: '/_authenticated/stress-detection'
       path: '/stress-detection'
       fullPath: '/stress-detection'
       preLoaderRoute: typeof AuthenticatedStressDetectionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/timeline': {
@@ -328,8 +386,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedHeatSafetyRoute: typeof AuthenticatedHeatSafetyRoute
   AuthenticatedIrrigationRoute: typeof AuthenticatedIrrigationRoute
   AuthenticatedMapRoute: typeof AuthenticatedMapRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedRecommendationsRoute: typeof AuthenticatedRecommendationsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedStressDetectionRoute: typeof AuthenticatedStressDetectionRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
   AuthenticatedTimelineRoute: typeof AuthenticatedTimelineRoute
   AuthenticatedWeatherRoute: typeof AuthenticatedWeatherRoute
   AuthenticatedWildfireRoute: typeof AuthenticatedWildfireRoute
@@ -343,8 +404,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHeatSafetyRoute: AuthenticatedHeatSafetyRoute,
   AuthenticatedIrrigationRoute: AuthenticatedIrrigationRoute,
   AuthenticatedMapRoute: AuthenticatedMapRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedRecommendationsRoute: AuthenticatedRecommendationsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedStressDetectionRoute: AuthenticatedStressDetectionRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
   AuthenticatedTimelineRoute: AuthenticatedTimelineRoute,
   AuthenticatedWeatherRoute: AuthenticatedWeatherRoute,
   AuthenticatedWildfireRoute: AuthenticatedWildfireRoute,
