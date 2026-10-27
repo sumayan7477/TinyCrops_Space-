@@ -8,3 +8,11 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Architecture rules
+- Signed-in pages live under `src/routes/_authenticated/` (client-only gate, wrapped in FarmProvider + AppShell); why: session is in localStorage.
+- Decision rules (heat bands, dryness, ranking) live as pure functions in `src/lib/insights.ts` with tests; why: keeps recommendations transparent and testable.
+- External data providers go through service modules in `src/lib/` (e.g. `weather.ts`); why: providers stay replaceable and UI never calls APIs directly.
+- Never show fabricated/mock observations: missing sources render explicit "not connected / insufficient data" states; why: core product requirement.
+- AI assistant runs in `src/routes/api/assistant.ts`, verifies the bearer token, and grounds answers only on the caller's records; why: no data leakage or invented facts.
+- Leaflet is imported dynamically inside `FarmMap` and rendered via `LazyMap` (ClientOnly); why: Leaflet breaks SSR.

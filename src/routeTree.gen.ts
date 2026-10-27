@@ -10,33 +10,267 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAssistantRouteImport } from './routes/_authenticated/assistant'
+import { Route as AuthenticatedCropHealthRouteImport } from './routes/_authenticated/crop-health'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedFarmsRouteImport } from './routes/_authenticated/farms'
+import { Route as AuthenticatedHeatSafetyRouteImport } from './routes/_authenticated/heat-safety'
+import { Route as AuthenticatedIrrigationRouteImport } from './routes/_authenticated/irrigation'
+import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedRecommendationsRouteImport } from './routes/_authenticated/recommendations'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedStressDetectionRouteImport } from './routes/_authenticated/stress-detection'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
+import { Route as AuthenticatedTimelineRouteImport } from './routes/_authenticated/timeline'
+import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticated/weather'
+import { Route as AuthenticatedWildfireRouteImport } from './routes/_authenticated/wildfire'
+import { Route as AuthenticatedWorkWindowsRouteImport } from './routes/_authenticated/work-windows'
+import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAssistantRoute = AuthenticatedAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCropHealthRoute = AuthenticatedCropHealthRouteImport.update({
+  id: '/crop-health',
+  path: '/crop-health',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFarmsRoute = AuthenticatedFarmsRouteImport.update({
+  id: '/farms',
+  path: '/farms',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHeatSafetyRoute = AuthenticatedHeatSafetyRouteImport.update({
+  id: '/heat-safety',
+  path: '/heat-safety',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIrrigationRoute = AuthenticatedIrrigationRouteImport.update({
+  id: '/irrigation',
+  path: '/irrigation',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecommendationsRoute =
+  AuthenticatedRecommendationsRouteImport.update({
+    id: '/recommendations',
+    path: '/recommendations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStressDetectionRoute =
+  AuthenticatedStressDetectionRouteImport.update({
+    id: '/stress-detection',
+    path: '/stress-detection',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTimelineRoute = AuthenticatedTimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWeatherRoute = AuthenticatedWeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWildfireRoute = AuthenticatedWildfireRouteImport.update({
+  id: '/wildfire',
+  path: '/wildfire',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWorkWindowsRoute =
+  AuthenticatedWorkWindowsRouteImport.update({
+    id: '/work-windows',
+    path: '/work-windows',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ApiAssistantRoute = ApiAssistantRouteImport.update({
+  id: '/api/assistant',
+  path: '/api/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/assistant': typeof AuthenticatedAssistantRoute
+  '/crop-health': typeof AuthenticatedCropHealthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/farms': typeof AuthenticatedFarmsRoute
+  '/heat-safety': typeof AuthenticatedHeatSafetyRoute
+  '/irrigation': typeof AuthenticatedIrrigationRoute
+  '/map': typeof AuthenticatedMapRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/tasks': typeof AuthenticatedTasksRoute
+  '/timeline': typeof AuthenticatedTimelineRoute
+  '/weather': typeof AuthenticatedWeatherRoute
+  '/wildfire': typeof AuthenticatedWildfireRoute
+  '/work-windows': typeof AuthenticatedWorkWindowsRoute
+  '/api/assistant': typeof ApiAssistantRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/assistant': typeof AuthenticatedAssistantRoute
+  '/crop-health': typeof AuthenticatedCropHealthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/farms': typeof AuthenticatedFarmsRoute
+  '/heat-safety': typeof AuthenticatedHeatSafetyRoute
+  '/irrigation': typeof AuthenticatedIrrigationRoute
+  '/map': typeof AuthenticatedMapRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/tasks': typeof AuthenticatedTasksRoute
+  '/timeline': typeof AuthenticatedTimelineRoute
+  '/weather': typeof AuthenticatedWeatherRoute
+  '/wildfire': typeof AuthenticatedWildfireRoute
+  '/work-windows': typeof AuthenticatedWorkWindowsRoute
+  '/api/assistant': typeof ApiAssistantRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/assistant': typeof AuthenticatedAssistantRoute
+  '/_authenticated/crop-health': typeof AuthenticatedCropHealthRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/farms': typeof AuthenticatedFarmsRoute
+  '/_authenticated/heat-safety': typeof AuthenticatedHeatSafetyRoute
+  '/_authenticated/irrigation': typeof AuthenticatedIrrigationRoute
+  '/_authenticated/map': typeof AuthenticatedMapRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/recommendations': typeof AuthenticatedRecommendationsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/stress-detection': typeof AuthenticatedStressDetectionRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
+  '/_authenticated/timeline': typeof AuthenticatedTimelineRoute
+  '/_authenticated/weather': typeof AuthenticatedWeatherRoute
+  '/_authenticated/wildfire': typeof AuthenticatedWildfireRoute
+  '/_authenticated/work-windows': typeof AuthenticatedWorkWindowsRoute
+  '/api/assistant': typeof ApiAssistantRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/assistant'
+    | '/crop-health'
+    | '/dashboard'
+    | '/farms'
+    | '/heat-safety'
+    | '/irrigation'
+    | '/map'
+    | '/notifications'
+    | '/recommendations'
+    | '/settings'
+    | '/stress-detection'
+    | '/tasks'
+    | '/timeline'
+    | '/weather'
+    | '/wildfire'
+    | '/work-windows'
+    | '/api/assistant'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/assistant'
+    | '/crop-health'
+    | '/dashboard'
+    | '/farms'
+    | '/heat-safety'
+    | '/irrigation'
+    | '/map'
+    | '/notifications'
+    | '/recommendations'
+    | '/settings'
+    | '/stress-detection'
+    | '/tasks'
+    | '/timeline'
+    | '/weather'
+    | '/wildfire'
+    | '/work-windows'
+    | '/api/assistant'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/assistant'
+    | '/_authenticated/crop-health'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/farms'
+    | '/_authenticated/heat-safety'
+    | '/_authenticated/irrigation'
+    | '/_authenticated/map'
+    | '/_authenticated/notifications'
+    | '/_authenticated/recommendations'
+    | '/_authenticated/settings'
+    | '/_authenticated/stress-detection'
+    | '/_authenticated/tasks'
+    | '/_authenticated/timeline'
+    | '/_authenticated/weather'
+    | '/_authenticated/wildfire'
+    | '/_authenticated/work-windows'
+    | '/api/assistant'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiAssistantRoute: typeof ApiAssistantRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +282,188 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/assistant': {
+      id: '/_authenticated/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AuthenticatedAssistantRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/crop-health': {
+      id: '/_authenticated/crop-health'
+      path: '/crop-health'
+      fullPath: '/crop-health'
+      preLoaderRoute: typeof AuthenticatedCropHealthRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/farms': {
+      id: '/_authenticated/farms'
+      path: '/farms'
+      fullPath: '/farms'
+      preLoaderRoute: typeof AuthenticatedFarmsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/heat-safety': {
+      id: '/_authenticated/heat-safety'
+      path: '/heat-safety'
+      fullPath: '/heat-safety'
+      preLoaderRoute: typeof AuthenticatedHeatSafetyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/irrigation': {
+      id: '/_authenticated/irrigation'
+      path: '/irrigation'
+      fullPath: '/irrigation'
+      preLoaderRoute: typeof AuthenticatedIrrigationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/map': {
+      id: '/_authenticated/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof AuthenticatedMapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recommendations': {
+      id: '/_authenticated/recommendations'
+      path: '/recommendations'
+      fullPath: '/recommendations'
+      preLoaderRoute: typeof AuthenticatedRecommendationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/stress-detection': {
+      id: '/_authenticated/stress-detection'
+      path: '/stress-detection'
+      fullPath: '/stress-detection'
+      preLoaderRoute: typeof AuthenticatedStressDetectionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/timeline': {
+      id: '/_authenticated/timeline'
+      path: '/timeline'
+      fullPath: '/timeline'
+      preLoaderRoute: typeof AuthenticatedTimelineRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/weather': {
+      id: '/_authenticated/weather'
+      path: '/weather'
+      fullPath: '/weather'
+      preLoaderRoute: typeof AuthenticatedWeatherRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/wildfire': {
+      id: '/_authenticated/wildfire'
+      path: '/wildfire'
+      fullPath: '/wildfire'
+      preLoaderRoute: typeof AuthenticatedWildfireRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/work-windows': {
+      id: '/_authenticated/work-windows'
+      path: '/work-windows'
+      fullPath: '/work-windows'
+      preLoaderRoute: typeof AuthenticatedWorkWindowsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/assistant': {
+      id: '/api/assistant'
+      path: '/api/assistant'
+      fullPath: '/api/assistant'
+      preLoaderRoute: typeof ApiAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAssistantRoute: typeof AuthenticatedAssistantRoute
+  AuthenticatedCropHealthRoute: typeof AuthenticatedCropHealthRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedFarmsRoute: typeof AuthenticatedFarmsRoute
+  AuthenticatedHeatSafetyRoute: typeof AuthenticatedHeatSafetyRoute
+  AuthenticatedIrrigationRoute: typeof AuthenticatedIrrigationRoute
+  AuthenticatedMapRoute: typeof AuthenticatedMapRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedRecommendationsRoute: typeof AuthenticatedRecommendationsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedStressDetectionRoute: typeof AuthenticatedStressDetectionRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
+  AuthenticatedTimelineRoute: typeof AuthenticatedTimelineRoute
+  AuthenticatedWeatherRoute: typeof AuthenticatedWeatherRoute
+  AuthenticatedWildfireRoute: typeof AuthenticatedWildfireRoute
+  AuthenticatedWorkWindowsRoute: typeof AuthenticatedWorkWindowsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAssistantRoute: AuthenticatedAssistantRoute,
+  AuthenticatedCropHealthRoute: AuthenticatedCropHealthRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedFarmsRoute: AuthenticatedFarmsRoute,
+  AuthenticatedHeatSafetyRoute: AuthenticatedHeatSafetyRoute,
+  AuthenticatedIrrigationRoute: AuthenticatedIrrigationRoute,
+  AuthenticatedMapRoute: AuthenticatedMapRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedRecommendationsRoute: AuthenticatedRecommendationsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedStressDetectionRoute: AuthenticatedStressDetectionRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
+  AuthenticatedTimelineRoute: AuthenticatedTimelineRoute,
+  AuthenticatedWeatherRoute: AuthenticatedWeatherRoute,
+  AuthenticatedWildfireRoute: AuthenticatedWildfireRoute,
+  AuthenticatedWorkWindowsRoute: AuthenticatedWorkWindowsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiAssistantRoute: ApiAssistantRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
