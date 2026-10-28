@@ -2,3 +2,6 @@
 - [x] Present safe plain-language parcel advice and retain detailed Inspector evidence.
 - [x] Adapt shared advice, navigation and weather presentation without changing integrations.
 - [x] Test rules and both modes on desktop/mobile; audit privacy and report limitations.
+- [ ] Verify official EFFIS layers, supported queries, dates and attribution.
+- [ ] Connect verified wildfire evidence in both modes and truthful Settings status.
+- [ ] Test real farm queries, no-data and service failures; report remaining limitations without publishing.
