@@ -6,4 +6,5 @@
 - [x] Connect verified wildfire evidence in both modes and truthful Settings status.
 - [x] Test real farm queries, no-data and service failures; report remaining limitations without publishing.
 - [ ] Validate actual fire-danger values against the viewer: blocked by official queries returning placeholders instead of dated values.
-- [ ] Verify complete nearby-fire records and distances: blocked by WMS point queries lacking complete radius-search coverage; requires an official downloadable dataset or feature service.
+- [ ] Verify complete nearby-fire records and distances: blocked by WMS point queries lacking complete radius-search coverage; requires an official downloadable dataset or feature service.- [x] Add NASA FIRMS active-fire detections (radius, distance, time, source, limitations), tested with sample, empty, stale and failed responses.
+- [ ] Real FIRMS detections test: blocked until the free FIRMS MAP_KEY is saved as a server secret.
