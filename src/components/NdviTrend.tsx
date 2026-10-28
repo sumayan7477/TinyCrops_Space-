@@ -1,6 +1,6 @@
 import { CartesianGrid, ComposedChart, Line, Scatter, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { Panel, Note } from "@/components/ui-kit";
-import { analyzeNdvi, RULES, type NdviObs, type TrendAnalysis } from "@/lib/ndvi-trend";
+import { analyzeNdvi, parcelAdvice, RULES, type NdviObs, type TrendAnalysis } from "@/lib/ndvi-trend";
 
 const MEANING: Record<TrendAnalysis["change"], { head: string; inspect: string }> = {
   increase: { head: "Green vegetation cover increased.", inspect: "Usually expected during canopy growth or after rain/irrigation. If the crop should be maturing or was harvested, check for weeds or regrowth." },
@@ -10,10 +10,13 @@ const MEANING: Record<TrendAnalysis["change"], { head: string; inspect: string }
   not_comparable: { head: "Not enough reliable data to compare.", inspect: "Fetch a longer date range, or wait for more cloud-free satellite passes." },
 };
 
-export function NdviTrend({ name, obs, crop }: { name: string; obs: (NdviObs & { source: string })[]; crop: string | null }) {
+export function NdviTrend({ name, obs, crop, stage, boundary }: { name: string; obs: (NdviObs & { source: string; resolution_m?: number | null; created_at?: string })[]; crop: string | null; stage: string | null; boundary: boolean }) {
   const a = analyzeNdvi(obs);
+  const advice = parcelAdvice(obs, { boundary, crop, stage });
+  const savedAt = obs.map((o) => o.created_at).filter((d): d is string => !!d).sort().at(-1);
   const sources = [...new Set(obs.map((o) => o.source))];
   const data = a.points.map((p) => ({ t: Date.parse(p.date), date: p.date, clear: p.reliable ? p.ndvi : null, flagged: p.reliable ? null : p.ndvi, reason: p.reason, cloud: p.sceneCloud, cf: p.clearFraction }));
+  const chartData = data.flatMap((point, i) => { const previous = data[i - 1]; return previous && (point.t - previous.t) / 86400000 > RULES.gapWarnDays ? [{ ...point, t: previous.t + 86400000, clear: null, flagged: null }, point] : [point]; });
   const fmt = (t: number) => new Date(t).toISOString().slice(5, 10);
 
   return (
@@ -24,7 +27,7 @@ export function NdviTrend({ name, obs, crop }: { name: string; obs: (NdviObs & {
         <div className="space-y-4">
           <div className="h-56 w-full" role="img" aria-label={`NDVI over time for ${name}`}>
             <ResponsiveContainer>
-              <ComposedChart data={data} margin={{ top: 8, right: 12, bottom: 0, left: -12 }}>
+              <ComposedChart data={chartData} margin={{ top: 8, right: 12, bottom: 0, left: -12 }}>
                 <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
                 <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={fmt} fontSize={11} stroke="var(--muted-foreground)" />
                 <YAxis domain={[-0.2, 1]} fontSize={11} stroke="var(--muted-foreground)" />
@@ -34,21 +37,23 @@ export function NdviTrend({ name, obs, crop }: { name: string; obs: (NdviObs & {
                   return (
                     <div className="rounded border bg-popover p-2 text-xs shadow">
                       <div className="font-medium">{d.date}</div>
-                      <div>NDVI {(d.clear ?? d.flagged)!.toFixed(2)}</div>
-                      <div>Scene cloud {d.cloud != null ? `${Math.round(d.cloud)}%` : "unknown"}{d.cf != null ? ` · parcel ${Math.round(d.cf * 100)}% clear` : ""}</div>
+                      <div>NDVI {(d.clear ?? d.flagged)?.toFixed(2) ?? "missing"}</div>
+                      <div>Scene cloud {d.cloud != null ? `${Math.round(d.cloud)}%` : "unknown"}{d.cf != null ? ` · parcel ${Math.round(d.cf * 100)}% usable pixels` : ""}</div>
                       {d.reason && <div className="text-warning-foreground">Excluded from comparison: {d.reason}</div>}
                     </div>
                   );
                 }} />
-                <Line dataKey="clear" connectNulls stroke="var(--chart-1)" strokeWidth={2} dot={{ r: 3 }} isAnimationActive={false} />
+                <Line dataKey="clear" connectNulls={false} stroke="var(--chart-1)" strokeWidth={2} dot={{ r: 3 }} isAnimationActive={false} />
                 <Scatter dataKey="flagged" fill="var(--chart-3)" shape="cross" isAnimationActive={false} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
           <p className="text-xs text-muted-foreground">
-            Line = clear observations ({a.reliableCount}); amber crosses = cloud-affected, shown but not used ({a.points.length - a.reliableCount}). Days without a point had no usable pass. Source: {sources.join(", ")}, 10 m, cloud/shadow masked.
+            Line = clear observations ({a.reliableCount}); amber crosses = excluded / uncertain quality, shown but not used ({a.points.length - a.reliableCount}). Days without a point had no usable pass. Source: {sources.join(", ")}. Resolution: {[...new Set(obs.map((o) => o.resolution_m).filter(Boolean))].join(", ") || "unknown"} m. Mask removes cloud, shadow, snow and no-data pixels.
           </p>
 
+          <p className="text-xs text-muted-foreground">Latest observation: {advice.latestDate ?? "none"} · last saved retrieval: {savedAt ? new Date(savedAt).toLocaleString() : "not recorded"}. Crop: {crop ?? "unknown"} · stage: {stage ?? "unknown"} · boundary: {boundary ? "saved" : "missing"}. Scene cloud is a scene-wide estimate, not cloud contamination over this parcel. Usable-pixel fraction includes all masking exclusions, not just clouds.</p>
+          {(advice.stale || advice.approximate) && <Note tone="warning">{advice.summary} Do not use these readings as a confident description of today’s field.</Note>}
           {(a.approximateBoundary || a.cloudRisk || a.tooFew || a.largestGapDays > RULES.gapWarnDays) && (
             <Note tone="warning">
               <span className="font-medium">Data quality: </span>
@@ -65,7 +70,7 @@ export function NdviTrend({ name, obs, crop }: { name: string; obs: (NdviObs & {
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs font-semibold uppercase text-muted-foreground">Measured</div>
               {a.compared ? (
-                <p className="text-sm">NDVI {a.compared.fromValue.toFixed(2)} on {a.compared.from} → {a.compared.toValue.toFixed(2)} on {a.compared.to} (change {a.delta! > 0 ? "+" : ""}{a.delta!.toFixed(2)}).</p>
+                <p className="text-sm">NDVI {a.compared.fromValue.toFixed(2)} on {a.compared.from} → {a.compared.toValue.toFixed(2)} on {a.compared.to} (change {(a.delta ?? 0) > 0 ? "+" : ""}{a.delta?.toFixed(2)}).</p>
               ) : (
                 <p className="text-sm">{a.notComparableReason}</p>
               )}
