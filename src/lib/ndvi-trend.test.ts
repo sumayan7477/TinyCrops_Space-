@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { analyzeNdvi, type NdviObs } from "./ndvi-trend";
+import { analyzeNdvi, parcelAdvice, type NdviObs } from "./ndvi-trend";
 
 const o = (d: string, v: number, cloud = 5, q = "parcel boundary; 90 clear px, 10 masked"): NdviObs => ({ observed_at: d, mean_value: v, cloud_cover_pct: cloud, quality: q });
 
@@ -25,4 +25,27 @@ describe("analyzeNdvi", () => {
     const a = analyzeNdvi([o("2026-09-01", 0.5, 5, "farm-point area (~500 m square); 90 clear px, 10 masked")]);
     expect(a.approximateBoundary).toBe(true);
   });
+  it("rejects duplicate dates instead of counting them as independent evidence", () => {
+    expect(analyzeNdvi([o("2026-10-01", 0.7), o("2026-10-01", 0.6), o("2026-10-10", 0.5)]).change).toBe("not_comparable");
+  });
+  it("excludes invalid dates and unknown parcel pixel quality", () => {
+    const a = analyzeNdvi([o("2026-02-30", 0.7), { ...o("2026-10-01", 0.5), quality: null }]);
+    expect(a.points).toHaveLength(1); expect(a.reliableCount).toBe(0);
+  });
+  it("does not infer a trend across a long data gap", () => {
+    expect(analyzeNdvi([o("2026-09-01", 0.7), o("2026-09-10", 0.6), o("2026-10-20", 0.4)]).change).toBe("not_comparable");
+  });
+});
+
+const details = { boundary: true, crop: "rice", stage: "growing" };
+const today = "2026-10-28";
+const stable = [o("2026-10-01", 0.7), o("2026-10-10", 0.71), o("2026-10-20", 0.72)];
+describe("shared farmer advice safety", () => {
+  it("stable real-quality readings do not raise an inspection warning", () => { const a = parcelAdvice(stable, details, today); expect(a.limited).toBe(false); expect(a.needsInspection).toBe(false); expect(a.analysis.change).toBe("stable"); });
+  it("a consistent synthetic decline suggests inspection, never a diagnosis", () => { const a = parcelAdvice([o("2026-10-01", 0.7), o("2026-10-10", 0.6), o("2026-10-20", 0.5)], details, today); expect(a.needsInspection).toBe(true); expect(a.analysis.change).toBe("decrease"); });
+  it("cloud-affected latest observations cannot support confident current advice", () => { const a = parcelAdvice([...stable, o("2026-10-25", 0.3, 80)], details, today); expect(a.limited).toBe(true); expect(a.needsInspection).toBe(false); });
+  it("no observations have no confident interpretation", () => { expect(parcelAdvice([], details, today).limited).toBe(true); });
+  it("old images cannot raise a current decline warning", () => { const a = parcelAdvice([o("2026-09-01", 0.7), o("2026-09-10", 0.6), o("2026-09-20", 0.5)], details, today); expect(a.stale).toBe(true); expect(a.needsInspection).toBe(false); });
+  it("missing boundaries prevent field-specific certainty", () => { const a = parcelAdvice(stable, { ...details, boundary: false }, today); expect(a.approximate).toBe(true); expect(a.limited).toBe(true); });
+  it("unknown crop and stage remain an explicit limitation", () => { expect(parcelAdvice(stable, { ...details, crop: null, stage: null }, today).missingCropDetails).toBe(true); });
 });
