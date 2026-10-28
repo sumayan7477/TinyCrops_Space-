@@ -16,3 +16,4 @@
 - Never show fabricated/mock observations: missing sources render explicit "not connected / insufficient data" states; why: core product requirement.
 - AI assistant runs in `src/routes/api/assistant.ts`, verifies the bearer token, and grounds answers only on the caller's records; why: no data leakage or invented facts.
 - Leaflet is imported dynamically inside `FarmMap` and rendered via `LazyMap` (ClientOnly); why: Leaflet breaks SSR.
+- Copernicus/Sentinel Hub calls run only in `src/lib/sentinel.server.ts` via the authenticated `src/routes/api/sentinel.ts` route (TanStack server route, not Edge Functions); why: client secret stays server-side and results are saved per user.
