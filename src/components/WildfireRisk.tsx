@@ -5,6 +5,7 @@ import { useFarm } from "@/lib/farm-context";
 import { useViewMode } from "@/lib/view-mode-context";
 import { useEffis } from "@/lib/use-effis";
 import { currentForecast, EFFIS_DOWNLOADS, EFFIS_VIEWER } from "@/lib/effis";
+import { FirmsDetections } from "@/components/FirmsDetections";
 export function WildfireRisk() {
   const { farm } = useFarm();
   const { mode } = useViewMode();
@@ -23,7 +24,6 @@ export function WildfireRisk() {
         {!fresh && <p role="alert" className="text-sm text-destructive">This check is out of date. Refresh before relying on it.</p>}
         <p className="text-sm font-medium">Follow local fire restrictions and emergency alerts before burning or using equipment that could spark.</p>
       </div>
-      <div className="border-t pt-4"><h3 className="mb-2 font-sans text-sm font-semibold">Nearby fire detections</h3><p className="text-sm text-muted-foreground">{data?.fires.message}</p></div>
       {data && <p className="text-xs text-muted-foreground">Last service check: {new Date(data.checkedAt).toLocaleString()}. This is not the observation update time.</p>}
       {mode === "inspector" && data && <section className="space-y-3 border-t pt-4">
         <h3 className="font-sans text-sm font-semibold">Evidence and service details</h3>
@@ -34,6 +34,7 @@ export function WildfireRisk() {
         <p className="text-xs text-muted-foreground">Advertised ranges ending in 2099 are not proof of available observations. Meteo France forecasts use a regional 10 km grid, as labelled in the official viewer; no field-level precision is established. Hotspot GetFeatureInfo selects map pixels, not a complete radius search; distance and absence claims are withheld.</p>
       </section>}
     </>}
+    <FirmsDetections farmId={farm?.id} inspector={mode === "inspector"} effisNote={data ? `EFFIS hotspot layer: ${data.fires.message}` : undefined} />
     <div className="flex flex-wrap gap-2"><Button asChild variant="outline"><a href={`${EFFIS_VIEWER}?lat=${farm?.latitude}&lon=${farm?.longitude}&zoom=9`} target="_blank" rel="noreferrer">Official EFFIS viewer <ExternalLink className="ml-2 h-4 w-4" /></a></Button><Button asChild variant="ghost"><a href={EFFIS_DOWNLOADS} target="_blank" rel="noreferrer">Official data downloads <ExternalLink className="ml-2 h-4 w-4" /></a></Button></div>
     <Note tone="warning">EFFIS fire danger is regional, not a prediction for an individual field. Satellite hotspots are detections, not danger forecasts or proof a fire is still burning. Neither replaces official emergency alerts or measures soil moisture.</Note>
     <p className="text-xs text-muted-foreground">Source: European Commission / Copernicus Emergency Management Service — EFFIS. Hotspots originate from NASA FIRMS. <a className="underline" href="https://forest-fire.emergency.copernicus.eu/about-effis/data-license" target="_blank" rel="noreferrer">Data reuse and attribution terms</a>.</p>
