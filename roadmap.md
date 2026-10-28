@@ -1,4 +1,4 @@
-- [ ] Add account-scoped Farmer / Inspector presentation toggle.
-- [ ] Present safe plain-language parcel advice and retain detailed Inspector evidence.
-- [ ] Adapt shared advice, navigation and weather presentation without changing integrations.
-- [ ] Test rules and both modes on desktop/mobile; audit privacy and report limitations.
+- [x] Add account-scoped Farmer / Inspector presentation toggle.
+- [x] Present safe plain-language parcel advice and retain detailed Inspector evidence.
+- [x] Adapt shared advice, navigation and weather presentation without changing integrations.
+- [x] Test rules and both modes on desktop/mobile; audit privacy and report limitations.

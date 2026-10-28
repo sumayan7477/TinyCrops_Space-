@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader, Panel, NeedsFarm, Note } from "@/components/ui-kit";
-import { SatellitePending } from "@/components/SatellitePending";
 import { LazyMap } from "@/components/LazyMap";
 import { useViewMode } from "@/lib/view-mode-context";
 import { useFarm } from "@/lib/farm-context";
-import { useParcels, useObservations } from "@/lib/data";
+import { useParcels } from "@/lib/data";
 
 export const Route = createFileRoute("/_authenticated/stress-detection")({
   head: () => ({ meta: [{ title: "Sub-Parcel Stress Detection — TinyCrops" }, { name: "description", content: "Localized vegetation anomalies within fields." }, { property: "og:title", content: "Sub-Parcel Stress Detection — TinyCrops" }, { property: "og:description", content: "Localized vegetation anomalies within fields." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
@@ -15,7 +14,6 @@ function Page() {
   const { mode } = useViewMode();
   const { farms, farm } = useFarm();
   const { data: parcels = [] } = useParcels();
-  const { data: obs = [] } = useObservations();
   return (
     <NeedsFarm>
       <PageHeader title="Sub-Parcel Stress Detection" description="Highlights zones within a field whose vegetation differs from the rest of the field." />

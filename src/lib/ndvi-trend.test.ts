@@ -48,4 +48,5 @@ describe("shared farmer advice safety", () => {
   it("old images cannot raise a current decline warning", () => { const a = parcelAdvice([o("2026-09-01", 0.7), o("2026-09-10", 0.6), o("2026-09-20", 0.5)], details, today); expect(a.stale).toBe(true); expect(a.needsInspection).toBe(false); });
   it("missing boundaries prevent field-specific certainty", () => { const a = parcelAdvice(stable, { ...details, boundary: false }, today); expect(a.approximate).toBe(true); expect(a.limited).toBe(true); });
   it("unknown crop and stage remain an explicit limitation", () => { expect(parcelAdvice(stable, { ...details, crop: null, stage: null }, today).missingCropDetails).toBe(true); });
+  it("saved boundaries do not erase the approximate area used by old readings", () => { const a = parcelAdvice(stable.map((row) => ({ ...row, quality: "farm-point area (~500 m square); 90 clear px, 10 masked" })), details, today); expect(a.approximate).toBe(true); expect(a.limited).toBe(true); });
 });

@@ -59,7 +59,7 @@ export function NdviTrend({ name, obs, crop, stage, boundary }: { name: string; 
             <Note tone="warning">
               <span className="font-medium">Data quality: </span>
               {[
-                a.approximateBoundary && "No parcel boundary saved — values cover a ~500 m square around the farm point and may include other land.",
+                a.approximateBoundary && "Observations used a ~500 m square around the farm point rather than a usable parcel boundary, and may include other land.",
                 a.cloudRisk && "Some observations are partly cloud-covered; residual haze can lower NDVI.",
                 a.tooFew && `Only ${a.reliableCount} clear observation(s) — too few for a trend.`,
                 a.largestGapDays > RULES.gapWarnDays && `${a.largestGapDays}-day gap between clear observations.`,

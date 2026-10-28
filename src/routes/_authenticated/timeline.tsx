@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { PageHeader, Panel, NeedsFarm, EmptyState, Badge2, PRIORITY_CLS } from "@/components/ui-kit";
-import { SatellitePending } from "@/components/SatellitePending";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FieldAdvice } from "@/components/FieldAdvice";
 import { NdviTrend } from "@/components/NdviTrend";
