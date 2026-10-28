@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader, Panel, NeedsFarm, Note, Badge2 } from "@/components/ui-kit";
 import { SatellitePending } from "@/components/SatellitePending";
+import { NdviTrend } from "@/components/NdviTrend";
 import { useFarm } from "@/lib/farm-context";
 import { useParcels, useObservations, STATUS_META } from "@/lib/data";
 import { useState } from "react";
@@ -98,6 +99,9 @@ function Page() {
             </tbody>
           </table>
         </div>
+        {fp.map((p) => (
+          <NdviTrend key={p.id} name={p.name} crop={p.crop_type} obs={obs.filter((o) => o.parcel_id === p.id && o.indicator === "NDVI")} />
+        ))}
         {obs.length === 0 && <SatellitePending what="Crop health monitoring" />}
         <Panel title="How to read vegetation indices">
           <p className="text-sm text-foreground/80">NDVI depends on crop type, growth stage, season and region — there is no single “healthy” threshold. TinyCrops compares each parcel with its own history and with other zones in the same field. Where crop type or growth stage is unknown, comparisons are less reliable.</p>
