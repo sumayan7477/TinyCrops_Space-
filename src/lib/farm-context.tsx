@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { useQuery } from "@tanstack/react-query";
 import { farmsQuery, type Farm } from "./data";
 import { weatherQuery, type WeatherData } from "./weather";
+import { usableWeather } from "./insights";
 
 interface Ctx {
   farms: Farm[];
@@ -37,9 +38,9 @@ export function FarmProvider({ children }: { children: ReactNode }) {
         setFarmId,
         date,
         setDate,
-        weather: w.data ?? null,
+        weather: !w.error && usableWeather(w.data ?? null) ? w.data ?? null : null,
         weatherLoading: w.isLoading && !!farm,
-        weatherError: (w.error as Error) ?? null,
+        weatherError: (w.error as Error) ?? (w.data && !usableWeather(w.data) ? new Error("Weather is out of date. Refresh before planning fieldwork") : null),
         loading: isLoading,
       }}
     >

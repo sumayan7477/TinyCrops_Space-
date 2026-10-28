@@ -12,7 +12,7 @@ import { useMut, useParcels, run, STATUS_META } from "@/lib/data";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/farms")({
-  head: () => ({ meta: [{ title: "My Farms & Parcels — TinyCrops" }, { name: "description", content: "Register farms and draw field parcel boundaries." }] }),
+  head: () => ({ meta: [{ title: "My Farms & Parcels — TinyCrops" }, { name: "description", content: "Register farms and draw field parcel boundaries." }, { property: "og:title", content: "My Farms & Parcels — TinyCrops" }, { property: "og:description", content: "Register farms and draw field parcel boundaries." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: FarmsPage,
 });
 

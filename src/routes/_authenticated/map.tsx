@@ -8,7 +8,7 @@ import { useParcels, useObservations, STATUS_META } from "@/lib/data";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/map")({
-  head: () => ({ meta: [{ title: "Farm Map — TinyCrops" }, { name: "description", content: "Interactive map of farms and parcel conditions." }] }),
+  head: () => ({ meta: [{ title: "Farm Map — TinyCrops" }, { name: "description", content: "Interactive map of farms and parcel conditions." }, { property: "og:title", content: "Farm Map — TinyCrops" }, { property: "og:description", content: "Interactive map of farms and parcel conditions." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: MapPage,
 });
 

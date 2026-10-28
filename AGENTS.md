@@ -18,3 +18,5 @@
 - Leaflet is imported dynamically inside `FarmMap` and rendered via `LazyMap` (ClientOnly); why: Leaflet breaks SSR.
 - Copernicus/Sentinel Hub calls run only in `src/lib/sentinel.server.ts` via the authenticated `src/routes/api/sentinel.ts` route (TanStack server route, not Edge Functions); why: client secret stays server-side and results are saved per user.
 - NDVI trend/comparison rules live in `src/lib/ndvi-trend.ts` (tested), rendered by `NdviTrend`; why: interpretation stays rule-based, self-referential (no universal threshold) and testable.
+- Farmer/Inspector presentation lives in ViewModeProvider, persisted locally per authenticated account and independent of farm records; why: both modes use identical data and authorization.
+- Parcel advice and Inspector comparisons share tested NDVI analysis, requiring distinct valid dates and known pixel quality, with freshness, gaps and approximate-area limitations; why: simple advice must not imply more certainty than its evidence.

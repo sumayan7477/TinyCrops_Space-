@@ -6,11 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { useProfile, useMut, run } from "@/lib/data";
+import { ModeSwitch } from "@/components/ModeSwitch";
+import { useViewMode } from "@/lib/view-mode-context";
+import { useProfile, useMut, run, useObservations } from "@/lib/data";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/settings")({
-  head: () => ({ meta: [{ title: "Data Sources & Settings — TinyCrops" }, { name: "description", content: "Connection status of data sources and your preferences." }] }),
+  head: () => ({ meta: [{ title: "Data Sources & Settings — TinyCrops" }, { name: "description", content: "Connection status of data sources and your preferences." }, { property: "og:title", content: "Data Sources & Settings — TinyCrops" }, { property: "og:description", content: "Connection status of data sources and your preferences." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 
@@ -24,6 +26,10 @@ const ST_CLS: Record<St, string> = {
 };
 
 function Page() {
+  const { mode } = useViewMode();
+  const inspector = mode === "inspector";
+  const oq = useObservations();
+  const satelliteRows = (oq.data ?? []).filter((o) => o.indicator === "NDVI" && o.source.includes("Copernicus"));
   const { weather, weatherError, weatherLoading, farm } = useFarm();
   const { data: profile } = useProfile();
   const [name, setName] = useState("");
@@ -39,8 +45,8 @@ function Page() {
 
   const weatherSt: St = !farm ? "configured" : weatherLoading ? "configured" : weatherError ? "error" : weather ? "connected" : "unavailable";
   const sources: { name: string; status: St; detail: string }[] = [
-    { name: "Weather — Open-Meteo", status: weatherSt, detail: weatherError ? weatherError.message : weather ? `Last retrieved ${new Date(weather.retrievedAt).toLocaleString()}. Forecast + 7-day history.` : "Add a farm to fetch weather." },
-    { name: "Satellite — Copernicus Data Space (Sentinel-2)", status: "not_configured", detail: "Needs a Copernicus Data Space account (OAuth client) to search and process imagery. Credentials would be stored server-side only." },
+    { name: "Weather — Open-Meteo", status: weatherSt, detail: weatherError ? "Weather could not be loaded" : weather ? `Last retrieved ${new Date(weather.retrievedAt).toLocaleString()}. Forecast + 7-day history.` : "Add a farm to fetch weather." },
+    { name: "Satellite — Copernicus Data Space (Sentinel-2)", status: oq.error ? "error" : satelliteRows.length ? "connected" : "unavailable", detail: oq.error ? "Saved observations could not be loaded." : satelliteRows.length ? `${satelliteRows.length} saved real observations. This does not verify current service access; use Crop Health to request an update.` : "No saved satellite observations. Request images on Crop Health to check current service access." },
     { name: "Wildfire — EFFIS", status: "not_configured", detail: "Fire-danger and active-fire services not yet connected. Not used as a soil-moisture source." },
     { name: "Soil moisture (optional)", status: "not_configured", detail: "Optional adapter for a verified soil-moisture dataset." },
     { name: "AI Farm Assistant", status: "connected", detail: "Answers from your saved records and live weather only." },
@@ -49,13 +55,13 @@ function Page() {
 
   return (
     <>
-      <PageHeader title="Data Sources & Settings" />
+      <PageHeader title={inspector ? "Data Sources & Settings" : "Settings"} />
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <Panel title="API connection status">
+        <Panel title={inspector ? "API connection status" : "Available information"}>
           <ul className="divide-y">
             {sources.map((s) => (
               <li key={s.name} className="flex items-start justify-between gap-4 py-3">
-                <div><p className="font-medium">{s.name}</p><p className="text-sm text-muted-foreground">{s.detail}</p></div>
+                <div><p className="font-medium">{inspector ? s.name : s.name.split(" — ")[0]}</p><p className="text-sm text-muted-foreground">{s.detail}</p></div>
                 <Badge2 className={ST_CLS[s.status]}>{s.status.replace("_", " ")}</Badge2>
               </li>
             ))}
@@ -63,8 +69,9 @@ function Page() {
         </Panel>
         <Panel title="Preferences">
           <div className="space-y-3">
+            <ModeSwitch />
             <div><Label htmlFor="dn">Display name</Label><Input id="dn" value={name} onChange={(e) => setName(e.target.value)} /></div>
-            <div><Label htmlFor="th">Local heat-safety threshold (°C apparent)</Label><Input id="th" type="number" value={thr} onChange={(e) => setThr(e.target.value)} /></div>
+            {inspector && <div><Label htmlFor="th">Local heat-safety threshold (°C apparent)</Label><Input id="th" type="number" value={thr} onChange={(e) => setThr(e.target.value)} /></div>}
             <div className="flex items-center gap-2"><Switch id="ia" checked={inApp} onCheckedChange={setInApp} /><Label htmlFor="ia">In-app notifications</Label></div>
             <div className="flex items-center gap-2 opacity-60"><Switch id="em" disabled /><Label htmlFor="em">Email notifications (coming later)</Label></div>
             <Button onClick={() => save.mutate(undefined)} disabled={save.isPending}>Save</Button>

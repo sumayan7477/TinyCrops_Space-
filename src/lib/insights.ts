@@ -130,7 +130,7 @@ export function buildDailyActions(input: {
   hasVegetationData: boolean;
 }): ActionItem[] {
   const items: ActionItem[] = [];
-  const w = input.weather;
+  const w = usableWeather(input.weather) ? input.weather : null;
   if (w) {
     const todayMax = w.daily.apparentMax[0];
     const risk = heatRisk(todayMax, "moderate");
@@ -206,4 +206,11 @@ export function buildDailyActions(input: {
     });
   }
   return items.sort((a, b) => b.score - a.score);
+}
+
+/** Forecasts retrieved more than one day ago cannot support current warnings. */
+export function usableWeather(weather: WeatherData | null, now = Date.now()): boolean {
+  if (!weather) return false;
+  const age = now - Date.parse(weather.retrievedAt);
+  return Number.isFinite(age) && age >= -60000 && age <= 86400000;
 }

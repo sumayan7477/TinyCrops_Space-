@@ -13,6 +13,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { supabase } from "@/integrations/supabase/client";
 import { useFarm } from "@/lib/farm-context";
 import { useNotifications, useProfile } from "@/lib/data";
+import { ModeSwitch } from "@/components/ModeSwitch";
+import { useViewMode } from "@/lib/view-mode-context";
 
 export const NAV = [
   { to: "/dashboard", label: "Daily Dashboard", icon: LayoutDashboard },
@@ -34,9 +36,16 @@ export const NAV = [
 ] as const;
 
 function NavList({ onNav }: { onNav?: () => void }) {
+  const { mode } = useViewMode();
+  const farmerLabels: Partial<Record<(typeof NAV)[number]["to"], string>> = {
+    "/dashboard": "Today's advice", "/farms": "My farms & fields", "/crop-health": "Field changes",
+    "/irrigation": "Watering checks", "/weather": "Upcoming weather", "/heat-safety": "Working in heat",
+    "/work-windows": "Plan fieldwork", "/recommendations": "Suggested actions", "/tasks": "Farm tasks",
+    "/assistant": "Ask about my farm", "/notifications": "Warnings & updates", "/settings": "Settings",
+  };
   return (
     <nav className="flex flex-col gap-0.5 px-3" aria-label="Main">
-      {NAV.map(({ to, label, icon: Icon }) => (
+      {NAV.filter((item) => mode === "inspector" || farmerLabels[item.to]).map(({ to, label, icon: Icon }) => (
         <Link
           key={to}
           to={to}
@@ -45,7 +54,7 @@ function NavList({ onNav }: { onNav?: () => void }) {
           activeProps={{ className: "bg-sidebar-accent text-sidebar-primary font-medium" }}
         >
           <Icon className="h-4 w-4 shrink-0" />
-          {label}
+          {mode === "farmer" ? farmerLabels[to] : label}
         </Link>
       ))}
     </nav>
@@ -86,14 +95,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         <NavList />
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-[500] flex items-center gap-3 border-b bg-background/90 px-4 py-3 backdrop-blur md:px-6">
+        <header className="sticky top-0 z-[500] flex flex-wrap items-center gap-2 border-b bg-background/90 px-4 py-3 backdrop-blur md:px-6">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open navigation">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-72 overflow-y-auto border-sidebar-border bg-sidebar p-0">
+            <SheetContent side="left" className="z-[700] w-72 overflow-y-auto border-sidebar-border bg-sidebar p-0 text-sidebar-foreground">
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <Brand />
               <NavList onNav={() => setOpen(false)} />
@@ -101,7 +110,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Sheet>
           {farms.length > 0 ? (
             <Select value={farm?.id} onValueChange={setFarmId}>
-              <SelectTrigger className="w-44 md:w-56" aria-label="Select farm">
+              <SelectTrigger className="w-36 md:w-56" aria-label="Select farm">
                 <SelectValue placeholder="Select farm" />
               </SelectTrigger>
               <SelectContent className="z-[600]">
@@ -139,6 +148,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+          <div className="flex w-full justify-end sm:w-auto sm:justify-start"><ModeSwitch /></div>
         </header>
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 md:px-8 md:py-8">{children}</main>
       </div>

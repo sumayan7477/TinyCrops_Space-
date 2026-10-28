@@ -4,11 +4,12 @@ import { PageHeader, Panel, NeedsFarm, LoadingBlock, ErrorState, Freshness, Note
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { useViewMode } from "@/lib/view-mode-context";
 import { useFarm } from "@/lib/farm-context";
 import { safeWorkWindows, heatRisk, HEAT_LABEL, HEAT_GUIDANCE, type Intensity } from "@/lib/insights";
 
 export const Route = createFileRoute("/_authenticated/work-windows")({
-  head: () => ({ meta: [{ title: "Safe Work Windows — TinyCrops" }, { name: "description", content: "Suggested lower-heat periods for outdoor farm work." }] }),
+  head: () => ({ meta: [{ title: "Safe Work Windows — TinyCrops" }, { name: "description", content: "Suggested lower-heat periods for outdoor farm work." }, { property: "og:title", content: "Safe Work Windows — TinyCrops" }, { property: "og:description", content: "Suggested lower-heat periods for outdoor farm work." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 
@@ -16,6 +17,8 @@ const fmt = (t: string) => new Date(t).toLocaleString(undefined, { weekday: "sho
 const BREAKS: Record<Intensity, string> = { light: "Short break each hour", moderate: "10–15 min shaded break every 45 min", heavy: "15 min shaded break every 30 min" };
 
 function Page() {
+  const { mode } = useViewMode();
+  const inspector = mode === "inspector";
   const { weather: w, weatherLoading, weatherError } = useFarm();
   const [intensity, setIntensity] = useState<Intensity>("moderate");
   const [duration, setDuration] = useState(2);
@@ -24,7 +27,7 @@ function Page() {
 
   return (
     <NeedsFarm>
-      <PageHeader title="Safe Work Windows & Labor Planning" description="Periods in the next 72 hours where forecast heat, wind and rain look less stressful for the chosen task." />
+      <PageHeader title={inspector ? "Safe Work Windows & Labor Planning" : "Plan fieldwork"} description="Periods in the next 72 hours where forecast heat, wind and rain look less stressful for the chosen task." />
       <Panel className="mb-6">
         <div className="flex flex-wrap items-end gap-8">
           <div>
@@ -51,8 +54,8 @@ function Page() {
                     <p className="font-semibold">{fmt(win.start)} → {fmt(win.end).split(" ").pop()}</p>
                     <Badge2 className={RISK_CLS[win.risk]}>{HEAT_LABEL[win.risk]}</Badge2>
                   </div>
-                  <p className="mt-2 text-sm text-foreground/80">{win.hours} h · peak apparent {win.maxApparent.toFixed(0)}°C</p>
-                  <p className="mt-1 text-sm"><strong>Why:</strong> {win.reason}</p>
+                  <p className="mt-2 text-sm text-foreground/80">{win.hours} h · peak feels like {win.maxApparent.toFixed(0)}°C</p>
+                  <p className="mt-1 text-sm"><strong>Why:</strong> {inspector ? win.reason : "Forecast heat, wind and rain look less stressful during these hours."}</p>
                   <p className="mt-1 text-sm"><strong>Breaks:</strong> {BREAKS[intensity]}. {HEAT_GUIDANCE[win.risk]}</p>
                 </Panel>
               ))}
@@ -64,7 +67,7 @@ function Page() {
             </Panel>
           )}
           <Freshness source={w.source} at={w.retrievedAt} />
-          <Note tone="warning">Assumptions: daylight 06:00–20:00 local farm time ({w.timezone}); acceptable = heat risk at or below Caution, wind &lt; 40 km/h, rain chance &lt; 60%. Forecasts carry uncertainty that grows with lead time. A suggested window is not a guarantee of safety — keep monitoring workers and follow local occupational rules.</Note>
+          <Note tone="warning">{inspector ? "Assumptions: daylight 06:00–20:00 local farm time; acceptable = heat risk at or below Caution, wind &lt; 40 km/h, rain chance &lt; 60%. Forecasts carry uncertainty that grows with lead time. A suggested window is not a guarantee of safety — keep monitoring workers and follow local occupational rules." : "Suggested work periods are weather-based, not a guarantee of safety. Conditions may change: keep water and shade available, monitor workers and follow local heat-safety rules."}</Note>
         </div>
       )}
     </NeedsFarm>

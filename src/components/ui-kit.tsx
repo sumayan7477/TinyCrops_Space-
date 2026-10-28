@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useFarm } from "@/lib/farm-context";
+import { useViewMode } from "@/lib/view-mode-context";
 
 export function PageHeader({ title, description, actions }: { title: string; description?: string; actions?: ReactNode }) {
   return (
@@ -65,9 +66,10 @@ export function Note({ children, tone = "info" }: { children: ReactNode; tone?: 
 }
 
 export function Freshness({ source, at }: { source: string; at: string }) {
+  const { mode } = useViewMode();
   return (
     <p className="text-xs text-muted-foreground">
-      Source: {source} · retrieved {new Date(at).toLocaleString()}
+      {mode === "inspector" ? `Source: ${source} · retrieved` : "Last updated:"} {new Date(at).toLocaleString()}
     </p>
   );
 }

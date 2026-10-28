@@ -6,13 +6,16 @@ import { useFarm } from "@/lib/farm-context";
 import { useDailyActions } from "@/lib/use-actions";
 import { useParcels, STATUS_META } from "@/lib/data";
 import { heatRisk, HEAT_LABEL } from "@/lib/insights";
+import { useViewMode } from "@/lib/view-mode-context";
+import { FarmFieldAdvice } from "@/components/FieldAdvice";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Daily Dashboard — TinyCrops" }, { name: "description", content: "Today's prioritized field actions." }] }),
+  head: () => ({ meta: [{ title: "Daily Dashboard — TinyCrops" }, { name: "description", content: "Today's prioritized field actions." }, { property: "og:title", content: "Daily Dashboard — TinyCrops" }, { property: "og:description", content: "Today's prioritized field actions." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Dashboard,
 });
 
 function Dashboard() {
+  const { mode } = useViewMode();
   const { farm, weather, weatherLoading, weatherError } = useFarm();
   const actions = useDailyActions();
   const { data: parcels = [] } = useParcels();
@@ -26,12 +29,13 @@ function Dashboard() {
         <section aria-labelledby="actions">
           <h2 id="actions" className="mb-3 text-xl font-semibold">Daily actions</h2>
           {weatherLoading ? <LoadingBlock /> : weatherError ? <ErrorState message={weatherError.message} /> : actions.length === 0 ? (
-            <EmptyState icon={<CheckCircle2 className="h-8 w-8 text-success" />} title="Nothing urgent from the data we have"
-              body="No heat, dryness, wind or overdue-task signals right now. Crop-health checks need satellite data, which isn't connected yet." />
+            <EmptyState icon={<CheckCircle2 className="h-8 w-8 text-success" />} title="No urgent weather or task advice"
+              body="No heat, low-rainfall, wind or overdue-task signals in the available records. Field-image advice is shown separately below." />
           ) : (
             <div className="space-y-4">{actions.map((a) => <ActionCard key={a.id} item={a} />)}</div>
           )}
-          <p className="mt-3 text-xs text-muted-foreground">Ranked by severity × evidence confidence, plus a boost for time-sensitive items. <Link to="/recommendations" className="underline">See details</Link></p>
+          {mode === "inspector" && <p className="mt-3 text-xs text-muted-foreground">Ranked by severity × evidence confidence, plus a boost for time-sensitive items. <Link to="/recommendations" className="underline">See details</Link></p>}
+          {mode === "farmer" && <div className="mt-6"><h2 className="mb-3 text-xl font-semibold">Recent field changes</h2><FarmFieldAdvice /></div>}
         </section>
         <div className="space-y-4">
           {weather && (

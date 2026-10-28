@@ -5,9 +5,12 @@ import type { ActionItem } from "@/lib/insights";
 import { supabase } from "@/integrations/supabase/client";
 import { useMut, run } from "@/lib/data";
 import { useFarm } from "@/lib/farm-context";
+import { useViewMode } from "@/lib/view-mode-context";
 
 export function ActionCard({ item, detailed }: { item: ActionItem; detailed?: boolean }) {
   const { farm } = useFarm();
+  const { mode } = useViewMode();
+  const farmer = mode === "farmer";
   const create = useMut(
     async () =>
       run(supabase.from("tasks").insert({
@@ -25,15 +28,16 @@ export function ActionCard({ item, detailed }: { item: ActionItem; detailed?: bo
         </div>
         <div className="flex gap-1.5">
           <Badge2 className={PRIORITY_CLS[item.priority]}>{item.priority}</Badge2>
-          <Badge2 className="border-border bg-muted text-muted-foreground">confidence: {item.confidence}</Badge2>
+          <Badge2 className="border-border bg-muted text-muted-foreground">{farmer ? ({ low: "Needs a field check", medium: "Weather-based estimate", high: "From your records" }[item.confidence]) : `confidence: ${item.confidence}`}</Badge2>
         </div>
       </div>
       <dl className="mt-3 grid gap-2 text-sm">
         <div><dt className="inline font-medium">Why it matters: </dt><dd className="inline text-foreground/80">{item.why}</dd></div>
         <div><dt className="inline font-medium">What to do: </dt><dd className="inline text-foreground/80">{item.action}</dd></div>
-        <div><dt className="inline font-medium">Evidence: </dt><dd className="inline text-foreground/80">{item.evidence}</dd></div>
-        {detailed && <div><dt className="inline font-medium">Uncertainty: </dt><dd className="inline text-foreground/80">{item.uncertainty}</dd></div>}
+        {!farmer && <div><dt className="inline font-medium">Evidence: </dt><dd className="inline text-foreground/80">{item.evidence}</dd></div>}
+        {!farmer && detailed && <div><dt className="inline font-medium">Uncertainty: </dt><dd className="inline text-foreground/80">{item.uncertainty}</dd></div>}
       </dl>
+      {farmer && <details className="mt-3 text-sm"><summary className="cursor-pointer font-medium text-primary">Why this advice?</summary><p className="mt-2"><strong>{item.category === "task" ? "Your record" : "Weather estimate"}: </strong>{item.category === "task" ? item.evidence : item.evidence.replace(/\s*\([^)]*\)\.?$/, ".")}</p><p className="mt-2">Rule-based suggestion: {item.uncertainty.replace(" and not WBGT", "")}</p></details>}
       <div className="mt-4 flex items-center justify-between">
         <p className="text-xs text-muted-foreground">Data time: {new Date(item.observedAt).toLocaleString()}</p>
         {item.category !== "task" && (
