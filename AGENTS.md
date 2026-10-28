@@ -20,3 +20,4 @@
 - NDVI trend/comparison rules live in `src/lib/ndvi-trend.ts` (tested), rendered by `NdviTrend`; why: interpretation stays rule-based, self-referential (no universal threshold) and testable.
 - Farmer/Inspector presentation lives in ViewModeProvider, persisted locally per authenticated account and independent of farm records; why: both modes use identical data and authorization.
 - Parcel advice and Inspector comparisons share tested NDVI analysis, requiring distinct valid dates and known pixel quality, with freshness, gaps and approximate-area limitations; why: simple advice must not imply more certainty than its evidence.
+- EFFIS WMS access lives in effis.server.ts behind an authenticated farm-scoped server function; catalogue/query success is separate from usable evidence, and point queries never imply a complete nearby-fire search; why: preserve privacy and avoid false reassurance.

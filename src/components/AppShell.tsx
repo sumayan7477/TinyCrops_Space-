@@ -40,7 +40,7 @@ function NavList({ onNav }: { onNav?: () => void }) {
   const farmerLabels: Partial<Record<(typeof NAV)[number]["to"], string>> = {
     "/dashboard": "Today's advice", "/farms": "My farms & fields", "/crop-health": "Field changes",
     "/irrigation": "Watering checks", "/weather": "Upcoming weather", "/heat-safety": "Working in heat",
-    "/work-windows": "Plan fieldwork", "/recommendations": "Suggested actions", "/tasks": "Farm tasks",
+    "/work-windows": "Plan fieldwork", "/wildfire": "Wildfire risk", "/recommendations": "Suggested actions", "/tasks": "Farm tasks",
     "/assistant": "Ask about my farm", "/notifications": "Warnings & updates", "/settings": "Settings",
   };
   return (
