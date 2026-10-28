@@ -50,7 +50,7 @@ function SentinelFetch({ farmId }: { farmId: string }) {
         <Button onClick={go} disabled={state.s === "loading"}>{state.s === "loading" ? "Requesting satellite data…" : inspector ? "Get satellite NDVI" : "Update images"}</Button>
       </div>
       {inspector && <p className="mt-2 text-xs text-muted-foreground">Up to 120 days. Uses each parcel's boundary if saved, otherwise a ~500 m square around the farm location. Cloud, shadow and snow pixels are removed.</p>}
-      {state.s === "error" && <div className="mt-3"><Note tone="warning">{inspector ? state.msg : "Field images could not be updated. Check the dates and try again; if this continues, the image service may need attention. Your saved readings have not been replaced."}</Note></div>}
+      {state.s === "error" && <div className="mt-3" role="alert"><Note tone="warning">{inspector ? state.msg : state.msg?.startsWith("Check your input") ? "Check the dates: use a past date range of no more than 120 days and make sure the farm has a saved field." : state.msg?.startsWith("Authentication") ? "The image service could not verify access. Try signing in again; if this continues, the service connection needs attention." : "Field images could not be fully updated. The image service may be unavailable; try again later. Review the saved image dates before relying on advice."}</Note></div>}
       {state.s === "done" && state.data && (
         <div className="mt-3 space-y-2 text-sm">
           <p className="text-xs text-muted-foreground">Last successful retrieval: {state.msg}</p>
@@ -86,7 +86,7 @@ function Page() {
     <NeedsFarm>
       <PageHeader title={inspector ? "Crop Health Monitoring" : "Field changes"} description={inspector ? "Real satellite evidence, quality limitations and rule-based interpretation." : "What recent field images suggest — and what to check before acting."} />
       <div className="space-y-6">
-        {farm && <SentinelFetch farmId={farm.id} />}
+        {farm && <SentinelFetch key={farm.id} farmId={farm.id} />}
         {!inspector && <FarmFieldAdvice />}
         {inspector && (pq.isLoading || oq.isLoading) && <LoadingBlock />}
         {inspector && (pq.error || oq.error) && <ErrorState message="Saved parcel evidence could not be loaded" />}
@@ -116,7 +116,7 @@ function Page() {
         ))}
         {inspector && fp.every((p) => !obs.some((o) => o.parcel_id === p.id && o.indicator === "NDVI")) && <SatellitePending what="Crop health monitoring" />}
         {inspector && <Panel title="How to read vegetation indices">
-          <p className="text-sm text-foreground/80">NDVI depends on crop type, growth stage, season and region — there is no single “healthy” threshold. TinyCrops compares each parcel with its own history and with other zones in the same field. Where crop type or growth stage is unknown, comparisons are less reliable.</p>
+          <p className="text-sm text-foreground/80">NDVI depends on crop type, growth stage, season and region — there is no single “healthy” threshold. TinyCrops compares each parcel's area with its own history; within-field zone comparisons are not available. Where crop type or growth stage is unknown, interpretation is less reliable.</p>
         </Panel>}
       </div>
     </NeedsFarm>
