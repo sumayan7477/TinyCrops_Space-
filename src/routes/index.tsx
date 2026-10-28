@@ -41,9 +41,10 @@ function Landing() {
           <p className="mt-5 max-w-lg text-lg text-muted-foreground">
             TinyCrops turns satellite, weather and wildfire data into a short list of what to inspect, where, and why — without pretending to know more than the data shows.
           </p>
-          <div className="mt-8 flex gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg"><Link to="/auth">Get started</Link></Button>
-            <Button asChild size="lg" variant="outline"><Link to="/dashboard">Sign in</Link></Button>
+            <Button asChild size="lg" variant="outline"><Link to="/demo">Explore Demo Farm</Link></Button>
+            <Button asChild size="lg" variant="ghost"><Link to="/dashboard">Sign in</Link></Button>
           </div>
         </div>
         <img src={heroImg} alt="Aerial view of farm parcels at golden hour" width={1280} height={960} className="aspect-[4/3] w-full rounded-xl object-cover shadow-lg" />
