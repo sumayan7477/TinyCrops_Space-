@@ -10,6 +10,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "TinyCrops turns satellite, weather and wildfire data into clear daily actions for small and medium farms." },
       { property: "og:title", content: "TinyCrops — Farm intelligence" },
       { property: "og:description", content: "Know which field needs attention today, why, and what to do next." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Landing,

@@ -7,7 +7,7 @@ import { useFarm } from "@/lib/farm-context";
 import { heatRisk, HEAT_LABEL, HEAT_GUIDANCE, INTENSITY_ADJUST, type Intensity } from "@/lib/insights";
 
 export const Route = createFileRoute("/_authenticated/heat-safety")({
-  head: () => ({ meta: [{ title: "Heat Safety Index — TinyCrops" }, { name: "description", content: "Worker heat-stress estimates and precautions." }] }),
+  head: () => ({ meta: [{ title: "Heat Safety Index — TinyCrops" }, { name: "description", content: "Worker heat-stress estimates and precautions." }, { property: "og:title", content: "Heat Safety Index — TinyCrops" }, { property: "og:description", content: "Worker heat-stress estimates and precautions." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

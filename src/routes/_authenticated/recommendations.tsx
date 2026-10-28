@@ -7,7 +7,7 @@ import { useViewMode } from "@/lib/view-mode-context";
 import { ErrorState } from "@/components/ui-kit";
 
 export const Route = createFileRoute("/_authenticated/recommendations")({
-  head: () => ({ meta: [{ title: "Action Recommendations — TinyCrops" }, { name: "description", content: "Evidence-based, prioritized recommendations." }] }),
+  head: () => ({ meta: [{ title: "Action Recommendations — TinyCrops" }, { name: "description", content: "Evidence-based, prioritized recommendations." }, { property: "og:title", content: "Action Recommendations — TinyCrops" }, { property: "og:description", content: "Evidence-based, prioritized recommendations." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

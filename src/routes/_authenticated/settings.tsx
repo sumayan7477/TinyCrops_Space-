@@ -12,7 +12,7 @@ import { useProfile, useMut, run, useObservations } from "@/lib/data";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/settings")({
-  head: () => ({ meta: [{ title: "Data Sources & Settings — TinyCrops" }, { name: "description", content: "Connection status of data sources and your preferences." }] }),
+  head: () => ({ meta: [{ title: "Data Sources & Settings — TinyCrops" }, { name: "description", content: "Connection status of data sources and your preferences." }, { property: "og:title", content: "Data Sources & Settings — TinyCrops" }, { property: "og:description", content: "Connection status of data sources and your preferences." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

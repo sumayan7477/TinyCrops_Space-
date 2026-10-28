@@ -13,7 +13,7 @@ import { useTasks, useParcels, useMut, run, type Task } from "@/lib/data";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/tasks")({
-  head: () => ({ meta: [{ title: "Farm Task List — TinyCrops" }, { name: "description", content: "Inspections and follow-ups created from alerts." }] }),
+  head: () => ({ meta: [{ title: "Farm Task List — TinyCrops" }, { name: "description", content: "Inspections and follow-ups created from alerts." }, { property: "og:title", content: "Farm Task List — TinyCrops" }, { property: "og:description", content: "Inspections and follow-ups created from alerts." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

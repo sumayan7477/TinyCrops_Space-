@@ -9,7 +9,7 @@ import { useFarm } from "@/lib/farm-context";
 import { safeWorkWindows, heatRisk, HEAT_LABEL, HEAT_GUIDANCE, type Intensity } from "@/lib/insights";
 
 export const Route = createFileRoute("/_authenticated/work-windows")({
-  head: () => ({ meta: [{ title: "Safe Work Windows — TinyCrops" }, { name: "description", content: "Suggested lower-heat periods for outdoor farm work." }] }),
+  head: () => ({ meta: [{ title: "Safe Work Windows — TinyCrops" }, { name: "description", content: "Suggested lower-heat periods for outdoor farm work." }, { property: "og:title", content: "Safe Work Windows — TinyCrops" }, { property: "og:description", content: "Suggested lower-heat periods for outdoor farm work." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

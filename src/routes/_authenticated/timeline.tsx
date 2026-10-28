@@ -11,7 +11,7 @@ import { useFarm } from "@/lib/farm-context";
 import { useParcels, useObservations, useTasks } from "@/lib/data";
 
 export const Route = createFileRoute("/_authenticated/timeline")({
-  head: () => ({ meta: [{ title: "Problem Timeline — TinyCrops" }, { name: "description", content: "Per-parcel history of observations, alerts and tasks." }] }),
+  head: () => ({ meta: [{ title: "Problem Timeline — TinyCrops" }, { name: "description", content: "Per-parcel history of observations, alerts and tasks." }, { property: "og:title", content: "Problem Timeline — TinyCrops" }, { property: "og:description", content: "Per-parcel history of observations, alerts and tasks." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

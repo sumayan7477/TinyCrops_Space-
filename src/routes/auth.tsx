@@ -17,6 +17,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in to TinyCrops to monitor your farms, parcels and daily field actions." },
       { property: "og:title", content: "Sign in — TinyCrops" },
       { property: "og:description", content: "Sign in to TinyCrops farm intelligence." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,

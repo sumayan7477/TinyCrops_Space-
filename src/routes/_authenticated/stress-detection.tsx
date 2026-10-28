@@ -7,7 +7,7 @@ import { useFarm } from "@/lib/farm-context";
 import { useParcels, useObservations } from "@/lib/data";
 
 export const Route = createFileRoute("/_authenticated/stress-detection")({
-  head: () => ({ meta: [{ title: "Sub-Parcel Stress Detection — TinyCrops" }, { name: "description", content: "Localized vegetation anomalies within fields." }] }),
+  head: () => ({ meta: [{ title: "Sub-Parcel Stress Detection — TinyCrops" }, { name: "description", content: "Localized vegetation anomalies within fields." }, { property: "og:title", content: "Sub-Parcel Stress Detection — TinyCrops" }, { property: "og:description", content: "Localized vegetation anomalies within fields." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

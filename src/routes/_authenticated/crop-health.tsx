@@ -71,7 +71,7 @@ function SentinelFetch({ farmId }: { farmId: string }) {
 }
 
 export const Route = createFileRoute("/_authenticated/crop-health")({
-  head: () => ({ meta: [{ title: "Crop Health Monitoring — TinyCrops" }, { name: "description", content: "Vegetation condition across your parcels." }] }),
+  head: () => ({ meta: [{ title: "Crop Health Monitoring — TinyCrops" }, { name: "description", content: "Vegetation condition across your parcels." }, { property: "og:title", content: "Crop Health Monitoring — TinyCrops" }, { property: "og:description", content: "Vegetation condition across your parcels." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

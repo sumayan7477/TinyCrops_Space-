@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/assistant")({
-  head: () => ({ meta: [{ title: "AI Farm Assistant — TinyCrops" }, { name: "description", content: "Ask questions about your farms, grounded in your records." }] }),
+  head: () => ({ meta: [{ title: "AI Farm Assistant — TinyCrops" }, { name: "description", content: "Ask questions about your farms, grounded in your records." }, { property: "og:title", content: "AI Farm Assistant — TinyCrops" }, { property: "og:description", content: "Ask questions about your farms, grounded in your records." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

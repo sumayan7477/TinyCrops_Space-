@@ -10,7 +10,7 @@ import { useViewMode } from "@/lib/view-mode-context";
 import { FarmFieldAdvice } from "@/components/FieldAdvice";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Daily Dashboard — TinyCrops" }, { name: "description", content: "Today's prioritized field actions." }] }),
+  head: () => ({ meta: [{ title: "Daily Dashboard — TinyCrops" }, { name: "description", content: "Today's prioritized field actions." }, { property: "og:title", content: "Daily Dashboard — TinyCrops" }, { property: "og:description", content: "Today's prioritized field actions." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Dashboard,
 });
 

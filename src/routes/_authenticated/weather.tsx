@@ -5,7 +5,7 @@ import { useViewMode } from "@/lib/view-mode-context";
 import { useFarm } from "@/lib/farm-context";
 
 export const Route = createFileRoute("/_authenticated/weather")({
-  head: () => ({ meta: [{ title: "Weather & Heat — TinyCrops" }, { name: "description", content: "Farm-location weather forecast and recent rainfall." }] }),
+  head: () => ({ meta: [{ title: "Weather & Heat — TinyCrops" }, { name: "description", content: "Farm-location weather forecast and recent rainfall." }, { property: "og:title", content: "Weather & Heat — TinyCrops" }, { property: "og:description", content: "Farm-location weather forecast and recent rainfall." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

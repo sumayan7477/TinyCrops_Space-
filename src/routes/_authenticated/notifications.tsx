@@ -7,7 +7,7 @@ import { useNotifications, useMut, run } from "@/lib/data";
 import { useDailyActions } from "@/lib/use-actions";
 
 export const Route = createFileRoute("/_authenticated/notifications")({
-  head: () => ({ meta: [{ title: "Notifications — TinyCrops" }, { name: "description", content: "Your farm alerts in plain language." }] }),
+  head: () => ({ meta: [{ title: "Notifications — TinyCrops" }, { name: "description", content: "Your farm alerts in plain language." }, { property: "og:title", content: "Notifications — TinyCrops" }, { property: "og:description", content: "Your farm alerts in plain language." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 

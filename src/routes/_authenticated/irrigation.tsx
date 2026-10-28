@@ -7,7 +7,7 @@ import { parcelAdvice } from "@/lib/ndvi-trend";
 import { drynessAlert } from "@/lib/insights";
 
 export const Route = createFileRoute("/_authenticated/irrigation")({
-  head: () => ({ meta: [{ title: "Smart Irrigation Alerts — TinyCrops" }, { name: "description", content: "Possible water-stress indicators per parcel." }] }),
+  head: () => ({ meta: [{ title: "Smart Irrigation Alerts — TinyCrops" }, { name: "description", content: "Possible water-stress indicators per parcel." }, { property: "og:title", content: "Smart Irrigation Alerts — TinyCrops" }, { property: "og:description", content: "Possible water-stress indicators per parcel." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Page,
 });
 
