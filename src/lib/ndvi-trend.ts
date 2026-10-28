@@ -109,7 +109,7 @@ export function parcelAdvice(obs: NdviObs[], details: { boundary: boolean; crop:
   let summary = "We need a clearer satellite image before making a reliable comparison.";
   let action = "Continue field checks while waiting for clearer images.";
   if (!latest) summary = "No usable satellite readings saved for this field yet.";
-  else if (approximate) { summary = "The image area may include land outside this field."; action = "Save a field boundary before relying on a field comparison."; }
+  else if (approximate) { summary = "The image area may include land outside this field."; action = details.boundary ? "Check the saved field outline before requesting field-specific images; these readings used an approximate area." : "Save a field boundary before relying on a field comparison."; }
   else if (stale) summary = "The last clear image is too old to describe today's field.";
   else if (!limited) {
     if (analysis.change === "stable") { summary = "No clear change detected. Continue your usual field checks."; action = "Continue your usual field checks."; }

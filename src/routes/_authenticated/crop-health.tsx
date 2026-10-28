@@ -91,7 +91,7 @@ function Page() {
         {inspector && (pq.isLoading || oq.isLoading) && <LoadingBlock />}
         {inspector && (pq.error || oq.error) && <ErrorState message="Saved parcel evidence could not be loaded" />}
         {inspector && <div className="overflow-x-auto rounded-lg border bg-card">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[720px] text-sm">
             <thead className="bg-muted text-left text-xs uppercase text-muted-foreground"><tr><th className="p-3">Parcel</th><th className="p-3">Crop / stage</th><th className="p-3">Latest NDVI</th><th className="p-3">Observations</th><th className="p-3">Status</th></tr></thead>
             <tbody>
               {fp.length === 0 && <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">No parcels on this farm.</td></tr>}

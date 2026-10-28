@@ -52,7 +52,8 @@ export function NdviTrend({ name, obs, crop, stage, boundary }: { name: string; 
             Line = clear observations ({a.reliableCount}); amber crosses = excluded / uncertain quality, shown but not used ({a.points.length - a.reliableCount}). Days without a point had no usable pass. Source: {sources.join(", ")}. Resolution: {[...new Set(obs.map((o) => o.resolution_m).filter(Boolean))].join(", ") || "unknown"} m. Mask removes cloud, shadow, snow and no-data pixels.
           </p>
 
-          <p className="text-xs text-muted-foreground">Latest observation: {advice.latestDate ?? "none"} · last saved retrieval: {savedAt ? new Date(savedAt).toLocaleString() : "not recorded"}. Crop: {crop ?? "unknown"} · stage: {stage ?? "unknown"} · boundary: {boundary ? "saved" : "missing"}. Scene cloud is a scene-wide estimate, not cloud contamination over this parcel. Usable-pixel fraction includes all masking exclusions, not just clouds.</p>
+          <p className="text-xs text-muted-foreground">Latest observation: {advice.latestDate ?? "none"} · last saved retrieval: {savedAt ? new Date(savedAt).toLocaleString() : "not recorded"}. Crop: {crop ?? "unknown"} · stage: {stage ?? "unknown"} · boundary: {boundary ? "saved" : "missing"}{a.approximateBoundary ? "; these observations used the farm-point fallback, not the saved outline" : ""}. Scene cloud is a scene-wide estimate, not cloud contamination over this parcel. Usable-pixel fraction includes all masking exclusions, not just clouds.</p>
+          <details className="text-sm"><summary className="cursor-pointer font-medium text-primary">Observation evidence</summary><div className="mt-2 overflow-x-auto"><table className="w-full min-w-[640px] text-left text-xs"><thead><tr><th className="p-2">Date</th><th className="p-2">NDVI</th><th className="p-2">Scene cloud</th><th className="p-2">Pixel quality / area</th><th className="p-2">Source</th></tr></thead><tbody>{obs.map((o, i) => <tr key={`${o.observed_at}-${i}`} className="border-t"><td className="p-2">{o.observed_at}</td><td className="p-2">{o.mean_value?.toFixed(2) ?? "missing"}</td><td className="p-2">{o.cloud_cover_pct == null ? "unknown" : `${o.cloud_cover_pct}%`}</td><td className="p-2">{o.quality ?? "unknown"}</td><td className="p-2">{o.source}</td></tr>)}</tbody></table></div></details>
           {(advice.stale || advice.approximate) && <Note tone="warning">{advice.summary} Do not use these readings as a confident description of today’s field.</Note>}
           {(a.approximateBoundary || a.cloudRisk || a.tooFew || a.largestGapDays > RULES.gapWarnDays) && (
             <Note tone="warning">
@@ -77,8 +78,8 @@ export function NdviTrend({ name, obs, crop, stage, boundary }: { name: string; 
             </div>
             <div className="rounded-md border border-info/30 bg-info/5 p-3">
               <div className="mb-1 text-xs font-semibold uppercase text-muted-foreground">What this means · rule-based interpretation</div>
-              <p className="text-sm font-medium">{MEANING[a.change].head}</p>
-              <p className="mt-1 text-sm text-foreground/80">What to inspect: {MEANING[a.change].inspect}</p>
+              <p className="text-sm font-medium">{advice.limited ? advice.summary : MEANING[a.change].head}</p>
+              <p className="mt-1 text-sm text-foreground/80">Suggested follow-up: {advice.limited ? advice.action : MEANING[a.change].inspect}</p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Rule: compares this parcel with itself only; changes under ±{RULES.noiseBand} are treated as noise; needs ≥{RULES.minReliable} clear observations. {crop ? "" : "Crop type unknown, so expected seasonal patterns can't be considered. "}NDVI does not diagnose disease or measure soil moisture.
               </p>

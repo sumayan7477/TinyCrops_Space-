@@ -23,7 +23,7 @@ export function FieldAdvice({ parcel, observations }: { parcel: Parcel; observat
         {a.analysis.cloudRisk && <p>Some images have clouds or uncertain quality and are left out of the comparison.</p>}
         {a.analysis.largestGapDays > 20 && <p>There is a long gap between clear images; changes during that gap are unknown.</p>}
         {a.stale && <p>Older images cannot tell us what is happening today.</p>}
-        {a.approximate && <p>The readings cover an approximate area and may include other land.</p>}
+        {a.approximate && <p>The readings cover an approximate area and may include other land. {parcel.boundary ? "An outline is saved, but these readings did not use it; the outline must be checked before obtaining field-specific readings." : "No field outline is saved."}</p>}
         {a.missingCropDetails && <p>Crop type or growth stage is missing, so we cannot say whether a change is expected for this crop.</p>}
       </div>
     </details>
