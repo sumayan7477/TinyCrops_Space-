@@ -1,4 +1,4 @@
-export const EFFIS_VIEWER = "https://forest-fire.emergency.copernicus.eu/apps/effis_current_situation/";
+export const EFFIS_VIEWER = "https://forest-fire.emergency.copernicus.eu/apps/effis.csv/";
 export const EFFIS_DOWNLOADS = "https://forest-fire.emergency.copernicus.eu/downloads-instructions";
 export type EffisState = "available" | "no_data" | "unsupported" | "error";
 export interface EffisLayer { name: string; queryable: boolean; defaultTime: string | null; extent: string | null; bounds: number[] | null }
