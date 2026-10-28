@@ -17,3 +17,4 @@
 - AI assistant runs in `src/routes/api/assistant.ts`, verifies the bearer token, and grounds answers only on the caller's records; why: no data leakage or invented facts.
 - Leaflet is imported dynamically inside `FarmMap` and rendered via `LazyMap` (ClientOnly); why: Leaflet breaks SSR.
 - Copernicus/Sentinel Hub calls run only in `src/lib/sentinel.server.ts` via the authenticated `src/routes/api/sentinel.ts` route (TanStack server route, not Edge Functions); why: client secret stays server-side and results are saved per user.
+- NDVI trend/comparison rules live in `src/lib/ndvi-trend.ts` (tested), rendered by `NdviTrend`; why: interpretation stays rule-based, self-referential (no universal threshold) and testable.
