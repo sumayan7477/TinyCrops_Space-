@@ -37,8 +37,8 @@ describe("demo data", () => {
   it("fire scenario never claims a confirmed fire", () => {
     const fire = DEMO_SCENARIO_MAP.fire;
     const text = JSON.stringify(fire).toLowerCase();
-    // "confirmed fire" may only appear negated ("not a confirmed fire")
-    expect(text.replace(/not a confirmed fire/g, "")).not.toContain("confirmed fire");
+    // "confirmed fire" may only appear negated
+    expect(text.replace(/not a confirmed fire|never as a confirmed fire/g, "")).not.toContain("confirmed fire");
     expect(fire.fireMonitoring).toContain("Not a confirmed fire");
   });
 });
