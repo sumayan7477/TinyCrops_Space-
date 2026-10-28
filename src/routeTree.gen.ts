@@ -29,6 +29,7 @@ import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedWildfireRouteImport } from './routes/_authenticated/wildfire'
 import { Route as AuthenticatedWorkWindowsRouteImport } from './routes/_authenticated/work-windows'
 import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
+import { Route as ApiSentinelRouteImport } from './routes/api/sentinel'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -133,6 +134,11 @@ const ApiAssistantRoute = ApiAssistantRouteImport.update({
   path: '/api/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSentinelRoute = ApiSentinelRouteImport.update({
+  id: '/api/sentinel',
+  path: '/api/sentinel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/wildfire': typeof AuthenticatedWildfireRoute
   '/work-windows': typeof AuthenticatedWorkWindowsRoute
   '/api/assistant': typeof ApiAssistantRoute
+  '/api/sentinel': typeof ApiSentinelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/wildfire': typeof AuthenticatedWildfireRoute
   '/work-windows': typeof AuthenticatedWorkWindowsRoute
   '/api/assistant': typeof ApiAssistantRoute
+  '/api/sentinel': typeof ApiSentinelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -198,6 +206,7 @@ export interface FileRoutesById {
   '/_authenticated/wildfire': typeof AuthenticatedWildfireRoute
   '/_authenticated/work-windows': typeof AuthenticatedWorkWindowsRoute
   '/api/assistant': typeof ApiAssistantRoute
+  '/api/sentinel': typeof ApiSentinelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/wildfire'
     | '/work-windows'
     | '/api/assistant'
+    | '/api/sentinel'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | '/wildfire'
     | '/work-windows'
     | '/api/assistant'
+    | '/api/sentinel'
   id:
     | '__root__'
     | '/'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/_authenticated/wildfire'
     | '/_authenticated/work-windows'
     | '/api/assistant'
+    | '/api/sentinel'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -271,6 +283,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiAssistantRoute: typeof ApiAssistantRoute
+  ApiSentinelRoute: typeof ApiSentinelRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -415,6 +428,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/sentinel': {
+      id: '/api/sentinel'
+      path: '/api/sentinel'
+      fullPath: '/api/sentinel'
+      preLoaderRoute: typeof ApiSentinelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiAssistantRoute: ApiAssistantRoute,
+  ApiSentinelRoute: ApiSentinelRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
