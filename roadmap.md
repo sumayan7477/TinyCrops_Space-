@@ -9,3 +9,4 @@
 - [ ] Verify complete nearby-fire records and distances: blocked by WMS point queries lacking complete radius-search coverage; requires an official downloadable dataset or feature service.- [x] Add NASA FIRMS active-fire detections (radius, distance, time, source, limitations), tested with sample, empty, stale and failed responses.
 - [ ] Real FIRMS detections test: blocked until the free FIRMS MAP_KEY is saved as a server secret.
 - [x] Redesign public /demo page (hero, feature cards, process, warning centre, farmer questions).
+- [ ] Publish redesigned /demo: waiting on user's preview approval.
