@@ -18,10 +18,10 @@ export const Route = createFileRoute("/")({
 });
 
 const FEATURES = [
-  { icon: ScanSearch, t: "Find the problem zone", d: "Spot unusual vegetation patterns inside a field — with the evidence shown." },
-  { icon: Droplets, t: "Check before you water", d: "Rainfall and vegetation signals tell you where to inspect irrigation first." },
-  { icon: ThermometerSun, t: "Plan safer work hours", d: "Heat-stress estimates and suggested work windows for your crew." },
-  { icon: Flame, t: "Wildfire awareness", d: "Regional fire information from official sources, clearly labelled." },
+  { icon: ScanSearch, t: "Smart Crop Health Monitoring", d: "Monitor crop health through satellite imagery and vegetation changes. Identify fields that may need attention." },
+  { icon: Droplets, t: "Climate Risk Intelligence", d: "Understand changing weather conditions and potential risks to crops and field activities." },
+  { icon: ThermometerSun, t: "Early Stress & Risk Alerts", d: "Identify unusual crop changes and potential environmental risks so farmers know where to inspect." },
+  { icon: Flame, t: "AI-Powered Action Guidance", d: "Get simple, practical recommendations explaining what to check, why it matters, and what to do next." },
 ];
 
 function Landing() {
