@@ -37,9 +37,9 @@ function Landing() {
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-6 py-12 md:grid-cols-2 md:py-20">
         <div>
           <p className="text-sm font-medium uppercase tracking-widest text-primary">Farm intelligence</p>
-          <h1 className="mt-3 text-5xl font-semibold leading-tight md:text-6xl">Which field needs you today?</h1>
+          <h1 className="mt-3 text-5xl font-semibold leading-tight md:text-6xl">Spot the Risk.<br />Make the Move.</h1>
           <p className="mt-5 max-w-lg text-lg text-muted-foreground">
-            TinyCrops turns satellite, weather and wildfire data into a short list of what to inspect, where, and why — without pretending to know more than the data shows.
+            Satellite-Powered Crop Monitoring &amp; Risk Management
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg"><Link to="/auth">Get started</Link></Button>
