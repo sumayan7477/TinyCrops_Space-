@@ -63,9 +63,9 @@ type Feature = {
 };
 
 const FEATURES: Feature[] = [
-  { icon: Leaf, heading: "Smart Crop Health Monitoring", question: "Is my crop showing signs of stress?", desc: "Track vegetation changes and spot fields that may need attention.", img: cropImg, alt: "Stylised satellite vegetation map of field parcels", scenario: "stress" },
+  { icon: Leaf, heading: "Smart Crop Health Monitoring", question: "Is my crop showing signs of stress?", desc: "Track vegetation changes and spot fields that may need attention.", img: cropImg, alt: "Stylised satellite vegetation map of field parcels", scenario: "cloudy" },
   { icon: CloudSun, heading: "Climate Risk Intelligence", question: "What weather risks are approaching?", desc: "Understand rainfall, temperature changes, and conditions that may affect fieldwork.", img: climateImg, alt: "Rain clouds and sunlight over green wheat fields", scenario: "rain" },
-  { icon: ShieldAlert, heading: "Early Stress & Pest Risk Alerts", question: "Where should I inspect more closely?", desc: "Highlight unusual crop changes and areas worth checking.", img: inspectImg, alt: "Farmer's hand inspecting wheat leaves", scenario: "cloudy", tag: "Indicators to inspect — not a diagnosis" },
+  { icon: ShieldAlert, heading: "Early Stress & Pest Risk Alerts", question: "Where should I inspect more closely?", desc: "Highlight unusual crop changes and areas worth checking.", img: inspectImg, alt: "Farmer's hand inspecting wheat leaves", scenario: "stress", tag: "Indicators to inspect — not a diagnosis" },
   { icon: Bot, heading: "AI-Powered Action Guidance", question: "What should I do next?", desc: "Turn complex information into simple, prioritised next steps.", img: actionImg, alt: "Farmer checking a phone at the edge of a wheat field", scenario: "dry", tag: "Rule-based in this demo" },
 ];
 
